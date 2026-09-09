@@ -331,7 +331,7 @@ impl PlacedInstance {
 #[pyclass(module = "kfnetlist._native", extends = Netlist)]
 #[derive(Default)]
 pub struct PlacedNetlist {
-    pub extras: IndexMap<String, PlacedExtra>,
+    pub(crate) extras: IndexMap<String, PlacedExtra>,
 }
 
 /// Wire format for a placed netlist: instances merge base fields + placement.
@@ -436,6 +436,7 @@ impl PlacedNetlist {
     /// Add an instance with its placed `cell` name and `placement`. Mirrors
     /// [`Netlist::create_inst`] with trailing optional `cell`/`placement`;
     /// keeping the base parameter order makes this a substitutable override.
+    #[allow(clippy::too_many_arguments)]
     #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1, cell=String::new(), placement=None))]
     fn create_inst(
         mut slf: PyRefMut<'_, Self>,
@@ -463,15 +464,94 @@ impl PlacedNetlist {
 
     /// Remove the named instances (delegating to the base) and drop their
     /// placement extras so the two layers stay consistent.
-    fn flatten_instances(mut slf: PyRefMut<'_, Self>, names: Vec<String>) -> PyResult<()> {
+    fn remove_instances(mut slf: PyRefMut<'_, Self>, names: Vec<String>) -> PyResult<()> {
         {
             let base: &mut Netlist = slf.as_mut();
-            base.flatten_instances(names.clone())?;
+            base.remove_instances(names.clone())?;
         }
         for name in &names {
             slf.extras.shift_remove(name);
         }
         Ok(())
+    }
+
+    /// Deprecated alias for [`PlacedNetlist::remove_instances`].
+    #[pyo3(name = "flatten_instances")]
+    fn flatten_instances_deprecated(
+        slf: PyRefMut<'_, Self>,
+        py: Python<'_>,
+        names: Vec<String>,
+    ) -> PyResult<()> {
+        crate::warn_deprecated(
+            py,
+            "PlacedNetlist.flatten_instances() is deprecated, use remove_instances() \
+             instead (PlacedNetlist.flatten() now inlines an instance's own netlist)",
+        )?;
+        Self::remove_instances(slf, names)
+    }
+
+    /// Replace instances by the contents of their own cell's netlist, composing
+    /// each inlined instance's placement with the placement of the instance it
+    /// came from (so the geometry stays in this cell's coordinates).
+    ///
+    /// Same arguments as [`Netlist::flatten`]; `instance_cell_map`/`sub_instance_cell_maps` are
+    /// optional here because `PlacedInstance.cell` already names the cell.
+    #[allow(clippy::too_many_arguments)]
+    #[pyo3(signature = (
+        netlists,
+        cells=None,
+        *,
+        exclude=None,
+        instance_cell_map=None,
+        sub_instance_cell_maps=None,
+        recursive=true,
+        allow_unconnected_ports=false,
+        warn_skipped=false,
+        separator=".".to_string(),
+    ))]
+    fn flatten(
+        slf: PyRef<'_, Self>,
+        py: Python<'_>,
+        netlists: &Bound<'_, PyAny>,
+        cells: Option<Vec<String>>,
+        exclude: Option<Vec<String>>,
+        instance_cell_map: Option<HashMap<String, String>>,
+        sub_instance_cell_maps: Option<HashMap<String, HashMap<String, String>>>,
+        recursive: bool,
+        allow_unconnected_ports: bool,
+        warn_skipped: bool,
+        separator: String,
+    ) -> PyResult<Py<Self>> {
+        let subs = crate::flatten::read_netlists(netlists)?;
+        let opts = crate::flatten::Options::new(
+            cells,
+            exclude,
+            recursive,
+            allow_unconnected_ports,
+            warn_skipped,
+            separator,
+        );
+        let base_ref: &Netlist = slf.as_ref();
+        let base = crate::flatten::NetlistData {
+            instances: base_ref.instances.clone(),
+            nets: base_ref.nets.clone(),
+            ports: base_ref.ports.clone(),
+            extras: slf.extras.clone(),
+        };
+        let out = crate::flatten::flatten_netlist(
+            py,
+            base,
+            &instance_cell_map.unwrap_or_default(),
+            &subs,
+            &sub_instance_cell_maps.unwrap_or_default(),
+            &opts,
+        )?;
+        let flat = Netlist {
+            instances: out.instances,
+            nets: out.nets,
+            ports: out.ports,
+        };
+        Py::new(py, Self::init_from(flat, out.extras))
     }
 
     fn __repr__(slf: PyRef<'_, Self>) -> String {
