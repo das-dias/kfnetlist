@@ -16,12 +16,12 @@ compile-schema-py:
     touch {{PROTO_OUT}}/__init__.py
 
 # Compile .proto files to Rust via prost-build (invoked through maturin's build.rs)
-compile-schema-rs:
-    mkdir -p {{PROTO_OUT_RS}}
-    maturin build
+#compile-schema-rs:
+#    mkdir -p {{PROTO_OUT_RS}}
+#    maturin build
 
 # Compile .proto files to both Python and Rust
-compile-schema: compile-schema-py compile-schema-rs
+compile-schema: compile-schema-py
 
 # Development setup
 dev:
