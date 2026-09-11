@@ -38,9 +38,14 @@ class _BaseLike(Protocol):
 
 
 class _PortLike(Protocol):
-    base: _BaseLike
-    name: str
-    port_type: str
+    @property
+    def base(self) -> _BaseLike: ...
+
+    @property
+    def name(self) -> str: ...
+
+    @property
+    def port_type(self) -> str: ...
 
 
 class _InstanceLike(Protocol):
