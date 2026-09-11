@@ -27,7 +27,11 @@ pub(crate) struct NetlistWire {
 }
 
 /// A netlist: instances, nets, and top-level ports.
-#[pyclass(module = "kfnetlist._native")]
+///
+/// Declared `subclass` so `PlacedNetlist` (which carries per-instance placement
+/// geometry) can extend it; this adds no fields and does not change the wire
+/// format.
+#[pyclass(module = "kfnetlist._native", subclass)]
 #[derive(Default, Debug)]
 pub struct Netlist {
     /// Instance name → instance. Insertion order preserved.
@@ -37,7 +41,7 @@ pub struct Netlist {
 }
 
 impl Netlist {
-    fn deep_clone(&self) -> Self {
+    pub(crate) fn deep_clone(&self) -> Self {
         Netlist {
             instances: self
                 .instances
@@ -170,7 +174,7 @@ impl Netlist {
     }
 
     #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1))]
-    fn create_inst(
+    pub(crate) fn create_inst(
         &mut self,
         name: String,
         kcl: String,
@@ -285,9 +289,13 @@ impl Netlist {
     }
 
     /// Remove the named instances and merge any nets touching them into
-    /// a single new net (per group of nets that referenced the same flattened
-    /// instance), preserving every non-flattened port reference.
-    fn flatten_instances(&mut self, names: Vec<String>) -> PyResult<()> {
+    /// a single new net (per group of nets that referenced the same removed
+    /// instance), preserving every surviving port reference.
+    ///
+    /// This *deletes* an instance: nothing of the cell it referenced is kept.
+    /// To replace an instance by the contents of its cell instead, use
+    /// [`Netlist::flatten`].
+    pub(crate) fn remove_instances(&mut self, names: Vec<String>) -> PyResult<()> {
         for inst_name in names {
             self.instances.shift_remove(&inst_name);
             let mut surviving: Vec<Net> = Vec::with_capacity(self.nets.len());
@@ -319,6 +327,93 @@ impl Netlist {
         Ok(())
     }
 
+    /// Deprecated alias for [`Netlist::remove_instances`].
+    #[pyo3(name = "flatten_instances")]
+    fn flatten_instances_deprecated(&mut self, py: Python<'_>, names: Vec<String>) -> PyResult<()> {
+        crate::warn_deprecated(
+            py,
+            "Netlist.flatten_instances() is deprecated, use remove_instances() instead \
+             (Netlist.flatten() now inlines an instance's own netlist)",
+        )?;
+        self.remove_instances(names)
+    }
+
+    /// Replace instances by the contents of their own cell's netlist.
+    ///
+    /// `netlists` is a `{cell name: Netlist | PlacedNetlist}` mapping, exactly
+    /// what `kfnetlist.extract.extract()` returns. Each instance is looked up
+    /// in it by cell name and, if selected, removed in favour of the sub-cell's
+    /// instances — renamed `"{instance}{separator}{inner instance}"` — with the
+    /// nets of both levels merged through the sub-cell's ports.
+    ///
+    /// A plain `NetlistInstance` does not know its cell name (`component` is
+    /// the factory name), so pass `instance_cell_map` (this netlist's
+    /// `instance name -> cell name`) and, for `recursive=True`, `sub_instance_cell_maps`
+    /// (`cell name -> {instance name -> cell name}`) for the levels below.
+    /// `PlacedNetlist` supplies both from `PlacedInstance.cell`.
+    ///
+    /// * `cells` — cell names to inline; `None` inlines everything resolvable
+    /// * `exclude` — cell names never to inline (wins over `cells`)
+    /// * `recursive` — keep inlining inside what was just inlined
+    /// * `allow_unconnected_ports` — inline even when a connected port has no
+    ///   net inside the sub-cell (dropping that connection) instead of raising
+    /// * `warn_skipped` — warn about every instance left alone
+    #[allow(clippy::too_many_arguments)]
+    #[pyo3(signature = (
+        netlists,
+        cells=None,
+        *,
+        exclude=None,
+        instance_cell_map=None,
+        sub_instance_cell_maps=None,
+        recursive=true,
+        allow_unconnected_ports=false,
+        warn_skipped=false,
+        separator=".".to_string(),
+    ))]
+    fn flatten(
+        &self,
+        py: Python<'_>,
+        netlists: &Bound<'_, PyAny>,
+        cells: Option<Vec<String>>,
+        exclude: Option<Vec<String>>,
+        instance_cell_map: Option<HashMap<String, String>>,
+        sub_instance_cell_maps: Option<HashMap<String, HashMap<String, String>>>,
+        recursive: bool,
+        allow_unconnected_ports: bool,
+        warn_skipped: bool,
+        separator: String,
+    ) -> PyResult<Netlist> {
+        let subs = crate::flatten::read_netlists(netlists)?;
+        let opts = crate::flatten::Options::new(
+            cells,
+            exclude,
+            recursive,
+            allow_unconnected_ports,
+            warn_skipped,
+            separator,
+        );
+        let base = crate::flatten::NetlistData {
+            instances: self.instances.clone(),
+            nets: self.nets.clone(),
+            ports: self.ports.clone(),
+            extras: Default::default(),
+        };
+        let out = crate::flatten::flatten_netlist(
+            py,
+            base,
+            &instance_cell_map.unwrap_or_default(),
+            &subs,
+            &sub_instance_cell_maps.unwrap_or_default(),
+            &opts,
+        )?;
+        Ok(Netlist {
+            instances: out.instances,
+            nets: out.nets,
+            ports: out.ports,
+        })
+    }
+
     /// Detect open (unconnected) elements in this netlist.
     ///
     /// Returns a dict with:
@@ -340,8 +435,8 @@ impl Netlist {
             .map(|p| p.name.clone())
             .collect();
         unconnected.sort(); // Sort just to make test results deterministic.
-        // Singleton nets are often a sign of an unintentional open connection, so we report them as well.
-        // Singleton nets can also just be an electrical interconnect net
+                            // Singleton nets are often a sign of an unintentional open connection, so we report them as well.
+                            // Singleton nets can also just be an electrical interconnect net
         let singleton_list = PyList::empty(py);
         for net in &self.nets {
             if net.members.len() == 1 {
@@ -397,7 +492,6 @@ impl Netlist {
         self.nets.sort();
         self.ports.sort();
     }
-
 
     /// Return a deep copy of the netlist with normalized settings (integer-
     /// valued floats become integers) and sorted contents.
@@ -636,20 +730,20 @@ enum CanonicalKey {
 }
 
 /// Classic union-find with path compression and union-by-rank.
-struct UnionFind {
+pub(crate) struct UnionFind {
     parent: Vec<usize>,
     rank: Vec<u8>,
 }
 
 impl UnionFind {
-    fn new(n: usize) -> Self {
+    pub(crate) fn new(n: usize) -> Self {
         Self {
             parent: (0..n).collect(),
             rank: vec![0; n],
         }
     }
 
-    fn find(&mut self, mut x: usize) -> usize {
+    pub(crate) fn find(&mut self, mut x: usize) -> usize {
         while self.parent[x] != x {
             self.parent[x] = self.parent[self.parent[x]];
             x = self.parent[x];
@@ -657,7 +751,7 @@ impl UnionFind {
         x
     }
 
-    fn union(&mut self, a: usize, b: usize) {
+    pub(crate) fn union(&mut self, a: usize, b: usize) {
         let ra = self.find(a);
         let rb = self.find(b);
         if ra == rb {
