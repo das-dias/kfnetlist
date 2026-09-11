@@ -5,13 +5,16 @@ use serde::{Deserialize, Serialize};
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
+mod flatten;
 mod instance;
 mod net;
 mod netlist;
+mod placement;
 mod port;
 use instance::{NetlistArray, NetlistInstance};
 use net::{Net, NetIter};
 use netlist::Netlist;
+use placement::{PlacedInstance, PlacedNetlist, Placement};
 use port::{NetlistPort, PortArrayRef, PortRef};
 
 #[pymodule]
@@ -24,6 +27,25 @@ fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<Net>()?;
     m.add_class::<NetIter>()?;
     m.add_class::<Netlist>()?;
+    m.add_class::<Placement>()?;
+    m.add_class::<PlacedInstance>()?;
+    m.add_class::<PlacedNetlist>()?;
+    Ok(())
+}
+
+/// Emit a Python `UserWarning`.
+pub(crate) fn warn(py: Python<'_>, message: &str) -> PyResult<()> {
+    let warnings = py.import("warnings")?;
+    let category = py.get_type::<pyo3::exceptions::PyUserWarning>();
+    warnings.call_method1("warn", (message, category, 2))?;
+    Ok(())
+}
+
+/// Emit a Python `DeprecationWarning`.
+pub(crate) fn warn_deprecated(py: Python<'_>, message: &str) -> PyResult<()> {
+    let warnings = py.import("warnings")?;
+    let category = py.get_type::<pyo3::exceptions::PyDeprecationWarning>();
+    warnings.call_method1("warn", (message, category, 2))?;
     Ok(())
 }
 
@@ -104,18 +126,14 @@ pub(crate) fn to_py_dict<'py, T: Serialize>(
 pub(crate) fn from_py_any<'py, T: for<'de> Deserialize<'de>>(
     obj: &Bound<'py, PyAny>,
 ) -> PyResult<T> {
-    depythonize(obj)
-        .map_err(|e| pyo3::exceptions::PyValueError::new_err(format!("from_dict: {e}")))
+    depythonize(obj).map_err(|e| pyo3::exceptions::PyValueError::new_err(format!("from_dict: {e}")))
 }
 
 pub(crate) fn pydantic_core_schema(cls: &Bound<'_, pyo3::types::PyType>) -> PyResult<PyObject> {
     let py = cls.py();
     let locals = pyo3::types::PyDict::new(py);
     locals.set_item("cls", cls)?;
-    locals.set_item(
-        "cs",
-        py.import("pydantic_core")?.getattr("core_schema")?,
-    )?;
+    locals.set_item("cs", py.import("pydantic_core")?.getattr("core_schema")?)?;
     py.run(
         c"def _validate(v):
     if isinstance(v, cls):

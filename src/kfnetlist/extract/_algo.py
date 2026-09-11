@@ -5,9 +5,18 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import TYPE_CHECKING, Protocol
 
-from kfnetlist import Net, Netlist, NetlistPort, PortArrayRef, PortRef
+from kfnetlist import (
+    Net,
+    Netlist,
+    NetlistPort,
+    Placement,
+    PlacedNetlist,
+    PortArrayRef,
+    PortRef,
+    flatten_netlists,
+)
 
-from ._geometry import _BaseLike, get_optical_nets
+from ._geometry import _BaseLike, _CrossSectionWrapperLike, get_optical_nets
 from ._l2n import l2n_elec as _l2n_elec
 from ._settings import serialize_setting
 
@@ -32,20 +41,28 @@ class _LibraryLike(Protocol):
 class _PortLike(Protocol):
     name: str
     port_type: str
-    layer_info: kdb.LayerInfo
     trans: kdb.Trans
-    base: _BaseLike
+
+    @property
+    def layer_info(self) -> kdb.LayerInfo: ...
+    @property
+    def base(self) -> _BaseLike: ...
+    @property
+    def cross_section(self) -> _CrossSectionWrapperLike: ...
 
 
 class _CellLike(Protocol):
     name: str
-    factory_name: str
-    virtual: bool
-    lvs_equivalent_ports: list[list[str]] | None
 
     # Declared as read-only properties (rather than class attributes) so that
     # implementations are free to expose narrower concrete types: protocol
     # attributes are invariant, properties are covariant on read.
+    @property
+    def virtual(self) -> bool: ...
+    @property
+    def lvs_equivalent_ports(self) -> list[list[str]] | None: ...
+    @property
+    def factory_name(self) -> str: ...
     @property
     def settings(self) -> _SettingsLike: ...
     @property
@@ -66,11 +83,12 @@ class _InstanceLike(Protocol):
     name: str
     na: int
     nb: int
-    instance: kdb.Instance
     dcplx_trans: kdb.DCplxTrans
     purpose: str | None
 
     # Read-only for the same covariance reason as `_CellLike.settings`.
+    @property
+    def instance(self) -> kdb.Instance: ...
     @property
     def cell(self) -> _CellLike: ...
     @property
@@ -80,13 +98,17 @@ class _InstanceLike(Protocol):
 
 class _KCLLike(Protocol):
     name: str
-    dbu: float
     layout: kdb.Layout
-    connectivity: Sequence[Sequence[kdb.LayerInfo]]
-    factories: Mapping[str, _FactoryLike]
-    virtual_factories: Mapping[str, _FactoryLike]
 
-    def __getitem__(self, key: int | str) -> _CellLike: ...
+    @property
+    def dbu(self) -> float: ...
+    @property
+    def connectivity(self) -> Sequence[Sequence[kdb.LayerInfo]]: ...
+    @property
+    def factories(self) -> Mapping[str, _FactoryLike]: ...
+    @property
+    def virtual_factories(self) -> Mapping[str, _FactoryLike]: ...
+    def __getitem__(self, key: int | str, /) -> _CellLike: ...
 
 
 class _RootCellLike(_CellLike, Protocol):
@@ -127,6 +149,64 @@ def _gather_equivalent_ports(
         if eqps is not None:
             eqps_all[c_.name] = eqps
     return eqps_all
+
+
+class _DBoxLike(Protocol):
+    left: float
+    bottom: float
+    right: float
+    top: float
+
+
+class _DVectorLike(Protocol):
+    x: float
+    y: float
+
+
+class _DCplxTransLike(Protocol):
+    angle: float
+    mirror: bool
+
+    @property
+    def disp(self) -> _DVectorLike: ...
+
+
+class _InstanceShapeLike(Protocol):
+    def dbbox(self) -> _DBoxLike: ...
+
+
+class _PlaceableLike(Protocol):
+    # Only the geometry surface `_placement_for` reads, described structurally
+    # like the other `*Like` protocols so the helper never depends on concrete
+    # klayout classes (and can be exercised with plain stand-ins in tests).
+    @property
+    def instance(self) -> _InstanceShapeLike: ...
+    @property
+    def dcplx_trans(self) -> _DCplxTransLike: ...
+
+
+def _placement_for(inst: _PlaceableLike) -> Placement:
+    """Build a :class:`Placement` from a placed klayout instance.
+
+    Reads the origin transform (displacement, rotation, mirror) in micrometres
+    plus the transformed bounding box in the parent cell's coordinates. This is
+    purely geometric; the placed cell name is captured separately onto
+    :class:`~kfnetlist.PlacedInstance`.
+    """
+    t = inst.dcplx_trans
+    bbox = inst.instance.dbbox()
+    return Placement(
+        x=t.disp.x,
+        y=t.disp.y,
+        orientation=t.angle,
+        mirror=t.mirror,
+        bbox={
+            "left": bbox.left,
+            "bottom": bbox.bottom,
+            "right": bbox.right,
+            "top": bbox.top,
+        },
+    )
 
 
 def _create_inst_entry(nl: Netlist, inst: _InstanceLike) -> None:
@@ -227,7 +307,7 @@ def _build_cell_netlist(
         inst_names |= {
             inst.name for inst in cell.insts if inst.purpose in exclude_purposes
         }
-    nl.flatten_instances(list(inst_names))
+    nl.remove_instances(list(inst_names))
     for inst_name in inst_names:
         nl.instances.pop(inst_name, None)
     nl.sort()
@@ -245,6 +325,8 @@ def extract(
     ignore_unnamed: bool = False,
     exclude_purposes: list[str] | None = None,
     allow_width_mismatch: bool = False,
+    include_placement: bool = False,
+    flatten: bool | Sequence[str] = False,
 ) -> dict[str, Netlist]:
     """Extract a hierarchical netlist from a cell.
 
@@ -257,6 +339,23 @@ def extract(
     hook: it converts a raw :class:`klayout.db.Instance` into an object with
     ``.name`` matching the names used elsewhere in the cell hierarchy. The
     kfactory shim passes ``lambda i: Instance(kcl=cell.kcl, instance=i)``.
+
+    When ``include_placement`` is ``True``, each returned value is a
+    :class:`~kfnetlist.PlacedNetlist` (a :class:`~kfnetlist.Netlist` subclass)
+    whose instances additionally carry a :class:`~kfnetlist.Placement` — the
+    cell name, origin transform (x, y, orientation, mirror), and bounding box —
+    read from the layout. The default (``False``) returns plain
+    :class:`~kfnetlist.Netlist` objects, identical to before.
+
+    ``flatten`` inlines instances into their parent: each returned netlist has
+    the selected instances replaced by the contents of their own cell's netlist
+    (renamed ``"{instance}.{inner instance}"``), with the nets of both levels
+    merged through the sub-cell's ports. Pass ``True`` to inline the whole
+    hierarchy, or a sequence of cell names to inline only those — so a
+    containerized subcircuit can be dissolved while an MZI that has its own
+    model stays intact. Works with or without ``include_placement``; with it,
+    each inlined placement is composed with the placement of the instance it
+    came from.
     """
     if equivalent_ports is None:
         equivalent_ports = _gather_equivalent_ports(cell)
@@ -277,6 +376,10 @@ def extract(
     )
 
     netlists: dict[str, Netlist] = {}
+    # Per cell, `instance name -> placed cell name`. `Netlist` instances only
+    # carry the factory name, so this is what lets `flatten()` find the netlist
+    # belonging to an instance regardless of the flavor.
+    instance_cell_maps: dict[str, dict[str, str]] = {}
 
     # NOTE: this pass mirrors a redundant remap loop in the original
     # ProtoTKCell.netlist body; preserved for behavioural parity.
@@ -307,6 +410,23 @@ def extract(
                 equivalent_ports=equivalent_ports,
                 port_mapping=port_mapping,
             )
-        netlists[c_.name] = nl
         nl.sort()
+        if include_placement:
+            # Upgrade the finished (flattened, normalized, sorted) connectivity
+            # netlist to a placement-aware one, attaching the placed cell name
+            # and placement only for the instances that survived flattening.
+            surviving = set(nl.instance_names())
+            placed = [inst for inst in c_.insts if inst.name in surviving]
+            placements = {inst.name: _placement_for(inst) for inst in placed}
+            cells = {inst.name: inst.cell.name for inst in placed}
+            nl = PlacedNetlist.from_netlist(nl, placements, cells)
+        netlists[c_.name] = nl
+        instance_cell_maps[c_.name] = {inst.name: inst.cell.name for inst in c_.insts}
+
+    if flatten:
+        netlists = flatten_netlists(
+            netlists,
+            None if isinstance(flatten, bool) else list(flatten),
+            instance_cell_maps=instance_cell_maps,
+        )
     return netlists
