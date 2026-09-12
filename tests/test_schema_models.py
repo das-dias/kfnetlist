@@ -403,8 +403,8 @@ class TestProtoRoundTrip:
         assert len(model.modules) == 1
         assert model.modules[0].name == "mod_a"
         back = model.to_proto()
-        assert back.name == proto.name  # ty: ignore[unresolved-attribute]
-        assert back.top_module == proto.top_module  # ty: ignore[unresolved-attribute]
+        assert back.name == proto.name
+        assert back.top_module == proto.top_module
 
     def test_top_level_module_to_proto_circuit(self):
         doc = _simple_doc()

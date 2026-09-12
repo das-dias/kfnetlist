@@ -52,15 +52,11 @@ ignore-words-list = "THE, BE, WE, TO, the, be, we, to, astroid, input, output, i
 [tool.ruff]
 exclude = ["docs"]
 
-[tool.ty.environment]
-python = ".venv"
-
 [tool.ty.src]
 exclude = [
     "docs",
-    "src/kfnetlist/kfnetlist_schema/circuit_pb2.py",
-    "src/kfnetlist/kfnetlist_schema/circuit_pb2.pyi",
-    "src/kfnetlist/kfnetlist_schema/_base.py",
+    "src/kfnetlist/kfnetlist_schema/",
+    "tests/test_schema_models.py",
 ]
 
 [tool.tbump]
