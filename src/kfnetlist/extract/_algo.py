@@ -217,11 +217,15 @@ def _create_inst_entry(nl: Netlist, inst: _InstanceLike) -> None:
         component = cell.name
     kcl_name = cell.library().name() if cell.is_library_cell() else cell.kcl.name
     settings = {k: serialize_setting(v) for k, v in cell.settings.model_dump().items()}
+    # Older adapters have no info property; unnamed kfactory instances raise
+    # on access. Test explicit naming, since an empty string is a valid name.
+    info = getattr(inst, "info", None) if inst.is_named() else None
     nl.create_inst(
         name=inst.name,
         kcl=kcl_name,
         component=component,
         settings=settings,
+        info=info.model_dump() if info is not None else {},
         na=inst.na,
         nb=inst.nb,
     )

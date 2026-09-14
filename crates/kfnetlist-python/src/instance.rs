@@ -130,7 +130,7 @@ impl NetlistInstance {
         self.0.name = value;
     }
     #[new]
-    #[pyo3(signature = (kcl, component, settings=None, array=None, name=String::new()))]
+    #[pyo3(signature = (kcl, component, settings=None, array=None, name=String::new(), *, info=None))]
     fn new(
         py: Python<'_>,
         kcl: String,
@@ -138,6 +138,7 @@ impl NetlistInstance {
         settings: Option<&Bound<'_, PyAny>>,
         array: Option<NetlistArray>,
         name: String,
+        info: Option<&Bound<'_, PyAny>>,
     ) -> PyResult<Self> {
         let settings = match settings {
             Some(obj) if !obj.is_none() => from_py_any::<serde_json::Value>(obj)?,
@@ -146,11 +147,24 @@ impl NetlistInstance {
         let _ = py;
         Ok(Self(kfnetlist_core::NetlistInstance {
             kcl,
+            info: info_from_py(info)?,
             component,
             settings,
             array: array.map(|value| value.0),
             name,
         }))
+    }
+
+    /// Fresh metadata snapshot; assign a whole dictionary to replace it.
+    #[getter]
+    fn info<'py>(&self, py: Python<'py>) -> PyResult<Bound<'py, PyAny>> {
+        to_py_dict(py, &self.info)
+    }
+
+    #[setter]
+    fn set_info(&mut self, value: &Bound<'_, PyAny>) -> PyResult<()> {
+        self.info = from_py_any(value)?;
+        Ok(())
     }
 
     #[getter]
@@ -189,6 +203,7 @@ impl NetlistInstance {
         let eq = self.kcl == other.kcl
             && self.component == other.component
             && self.settings == other.settings
+            && self.info == other.info
             && self.array == other.array
             && self.name == other.name;
         Ok(crate::richcmp_result(py, Some(cmp_to_py(op, false, eq))))
@@ -230,5 +245,15 @@ impl NetlistInstance {
     fn from_dict(_cls: &Bound<'_, PyType>, obj: &Bound<'_, PyAny>, name: String) -> PyResult<Self> {
         let wire: NetlistInstanceWire = from_py_any(obj)?;
         Ok(Self::from_wire(name, wire))
+    }
+}
+
+/// Constructor default shared by plain and placed instances.
+pub(crate) fn info_from_py(
+    value: Option<&Bound<'_, PyAny>>,
+) -> PyResult<serde_json::Map<String, serde_json::Value>> {
+    match value {
+        Some(obj) if !obj.is_none() => from_py_any(obj),
+        _ => Ok(Default::default()),
     }
 }

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- **Instance metadata** — `NetlistInstance.info` and `PlacedInstance.info`
+  carry JSON-compatible dictionaries, accepted through keyword-only `info=`
+  constructor and `create_inst()` arguments. Extraction copies named kfactory
+  instances' metadata. Metadata survives serialization, normalization, placement
+  conversion, and child promotion during flattening. Empty metadata is omitted
+  from output, and existing payloads without `info` remain readable.
 - **`Netlist.flatten()`** — hierarchical flattening: replace instances by the
   contents of their own cell's netlist, rewiring the parent's nets through the
   sub-cell's ports. Selectable per cell (`cells` / `exclude`), recursive by

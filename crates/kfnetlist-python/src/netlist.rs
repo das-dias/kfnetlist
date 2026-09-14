@@ -1,4 +1,4 @@
-use crate::instance::NetlistInstance;
+use crate::instance::{info_from_py, NetlistInstance};
 use crate::net::{Net, NetMember, NetMemberPython};
 use crate::port::NetlistPort;
 use crate::{
@@ -91,7 +91,8 @@ impl Netlist {
         NetlistPort(self.0.create_port(name))
     }
 
-    #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1))]
+    #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1, *, info=None))]
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn create_inst(
         &mut self,
         name: String,
@@ -100,13 +101,22 @@ impl Netlist {
         settings: Option<&Bound<'_, PyAny>>,
         na: i64,
         nb: i64,
+        info: Option<&Bound<'_, PyAny>>,
     ) -> PyResult<NetlistInstance> {
         let settings_value = match settings {
             Some(obj) if !obj.is_none() => from_py_any::<serde_json::Value>(obj)?,
             _ => serde_json::Value::Object(Default::default()),
         };
         self.0
-            .create_inst(name, kcl, component, settings_value, na, nb)
+            .create_inst_with_info(
+                name,
+                kcl,
+                component,
+                settings_value,
+                na,
+                nb,
+                info_from_py(info)?,
+            )
             .map(NetlistInstance)
             .map_err(core_error)
     }

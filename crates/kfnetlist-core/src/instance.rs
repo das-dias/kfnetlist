@@ -17,6 +17,8 @@ pub struct NetlistArray {
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(from = "NetlistInstanceWire", into = "NetlistInstanceWire")]
 pub struct NetlistInstance {
+    /// Per-instance JSON-compatible metadata.
+    pub info: serde_json::Map<String, serde_json::Value>,
     pub kcl: String,
     pub component: String,
     /// Free-form JSON-serializable settings.
@@ -29,6 +31,8 @@ pub struct NetlistInstance {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct NetlistInstanceWire {
+    #[serde(default, skip_serializing_if = "serde_json::Map::is_empty")]
+    pub info: serde_json::Map<String, serde_json::Value>,
     pub kcl: String,
     pub component: String,
     #[serde(default)]
@@ -40,6 +44,7 @@ pub struct NetlistInstanceWire {
 impl NetlistInstance {
     pub fn to_wire(&self) -> NetlistInstanceWire {
         NetlistInstanceWire {
+            info: self.info.clone(),
             kcl: self.kcl.clone(),
             component: self.component.clone(),
             settings: if self.settings.is_null() {
@@ -53,6 +58,7 @@ impl NetlistInstance {
 
     pub fn from_wire(name: String, wire: NetlistInstanceWire) -> Self {
         Self {
+            info: wire.info,
             kcl: wire.kcl,
             component: wire.component,
             settings: wire.settings,

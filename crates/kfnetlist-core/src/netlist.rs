@@ -78,6 +78,7 @@ impl Netlist {
             if va.kcl != vb.kcl
                 || va.component != vb.component
                 || va.settings != vb.settings
+                || va.info != vb.info
                 || va.array != vb.array
                 || va.name != vb.name
             {
@@ -121,6 +122,21 @@ impl Netlist {
         na: i64,
         nb: i64,
     ) -> Result<NetlistInstance> {
+        self.create_inst_with_info(name, kcl, component, settings, na, nb, Default::default())
+    }
+
+    /// Create or replace an instance and attach JSON-compatible metadata.
+    #[allow(clippy::too_many_arguments)]
+    pub fn create_inst_with_info(
+        &mut self,
+        name: String,
+        kcl: String,
+        component: String,
+        settings: serde_json::Value,
+        na: i64,
+        nb: i64,
+        info: serde_json::Map<String, serde_json::Value>,
+    ) -> Result<NetlistInstance> {
         let array = if na != 0 && nb != 0 {
             if na < 1 || nb < 1 {
                 return Err(Error::InvalidArrayDimensions { na, nb });
@@ -130,6 +146,7 @@ impl Netlist {
             None
         };
         let inst = NetlistInstance {
+            info,
             kcl,
             component,
             settings,

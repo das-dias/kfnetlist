@@ -28,6 +28,35 @@ fn add_instance(nl: &mut Netlist, name: &str, component: &str) {
 }
 
 #[test]
+fn instance_metadata_round_trips_and_survives_normalization() {
+    let mut nl = Netlist::default();
+    let info = serde_json::from_value(json!({
+        "owner": "detector",
+        "channels": [1, 2.0]
+    }))
+    .unwrap();
+    nl.create_inst_with_info(
+        "unit".into(),
+        "pdk".into(),
+        "cell".into(),
+        json!({"length": 2.0}),
+        1,
+        1,
+        info,
+    )
+    .unwrap();
+
+    let loaded: Netlist = from_json(&to_json(&nl).unwrap()).unwrap();
+    assert_eq!(loaded, nl);
+    let normalized = nl.normalize(None, None, None).unwrap();
+    assert_eq!(normalized.instances["unit"].settings, json!({"length": 2}));
+    assert_eq!(
+        normalized.instances["unit"].info,
+        serde_json::from_value(json!({"owner": "detector", "channels": [1, 2.0]})).unwrap()
+    );
+}
+
+#[test]
 fn serde_wire_round_trip_restores_names_and_preserves_member_variants() {
     let wire = json!({
         "instances": {"unit": {"kcl": "pdk", "component": "cell", "settings": {}, "array": {"na": 2, "nb": 3}}},

@@ -19,6 +19,9 @@ The core exports `Netlist`, `Net`, `NetMember`, `NetlistPort`, `PortRef`,
 - `Netlist::create_inst` accepts JSON settings and array dimensions and returns
   an owned snapshot. `create_net` accepts an iterator of owned `NetMember` values.
   These methods validate their inputs before committing changes.
+- `NetlistInstance::info` stores JSON-compatible per-instance metadata.
+  `create_inst_with_info` accepts metadata while `create_inst` retains the
+  original signature and defaults it to an empty map.
 - `detect_opens` returns `Opens { unconnected_ports, singleton_nets }`.
   `find_net_difference` returns `NetDifference { missing, extra }`.
   Both results own their contents and preserve the Python API's ordering rules.

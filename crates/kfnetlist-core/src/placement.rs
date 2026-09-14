@@ -46,6 +46,8 @@ pub struct PlacedExtra {
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct PlacedInstanceWire {
+    #[serde(default, skip_serializing_if = "serde_json::Map::is_empty")]
+    pub info: serde_json::Map<String, serde_json::Value>,
     pub kcl: String,
     pub component: String,
     #[serde(default)]
@@ -60,6 +62,7 @@ pub struct PlacedInstanceWire {
 impl PlacedInstanceWire {
     pub fn from_parts(inst: &NetlistInstance, extra: &PlacedExtra) -> Self {
         Self {
+            info: inst.info.clone(),
             kcl: inst.kcl.clone(),
             component: inst.component.clone(),
             settings: if inst.settings.is_null() {
@@ -75,6 +78,7 @@ impl PlacedInstanceWire {
 
     pub fn into_instance(self, name: String) -> (NetlistInstance, PlacedExtra) {
         let inst = NetlistInstance {
+            info: self.info,
             kcl: self.kcl,
             component: self.component,
             settings: self.settings,
@@ -182,9 +186,40 @@ impl PlacedNetlist {
         nb: i64,
         extra: PlacedExtra,
     ) -> crate::Result<PlacedInstance> {
-        let instance = self
-            .netlist
-            .create_inst(name.clone(), kcl, component, settings, na, nb)?;
+        self.create_inst_with_info(
+            name,
+            kcl,
+            component,
+            settings,
+            na,
+            nb,
+            Default::default(),
+            extra,
+        )
+    }
+
+    /// Create an instance with metadata and attach physical attributes.
+    #[allow(clippy::too_many_arguments)]
+    pub fn create_inst_with_info(
+        &mut self,
+        name: String,
+        kcl: String,
+        component: String,
+        settings: serde_json::Value,
+        na: i64,
+        nb: i64,
+        info: serde_json::Map<String, serde_json::Value>,
+        extra: PlacedExtra,
+    ) -> crate::Result<PlacedInstance> {
+        let instance = self.netlist.create_inst_with_info(
+            name.clone(),
+            kcl,
+            component,
+            settings,
+            na,
+            nb,
+            info,
+        )?;
         self.extras.insert(name, extra.clone());
         Ok(PlacedInstance { instance, extra })
     }

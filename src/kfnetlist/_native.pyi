@@ -71,6 +71,7 @@ class NetlistArray:
     def from_dict(cls, obj: dict[str, Any]) -> Self: ...
 
 class NetlistInstance:
+    info: dict[str, Any]
     kcl: str
     component: str
     settings: dict[str, Any]
@@ -84,6 +85,8 @@ class NetlistInstance:
         settings: dict[str, Any] | None = ...,
         array: NetlistArray | None = ...,
         name: str = ...,
+        *,
+        info: dict[str, Any] | None = ...,
     ) -> None: ...
     def normalize(self) -> None: ...
     def to_json(self) -> str: ...
@@ -128,6 +131,8 @@ class PlacedInstance(NetlistInstance):
         name: str = ...,
         cell: str = ...,
         placement: Placement | None = ...,
+        *,
+        info: dict[str, Any] | None = ...,
     ) -> None: ...
     def to_json(self) -> str: ...
     @classmethod
@@ -180,6 +185,8 @@ class Netlist:
         settings: dict[str, Any] | None = ...,
         na: int = ...,
         nb: int = ...,
+        *,
+        info: dict[str, Any] | None = ...,
     ) -> NetlistInstance: ...
     def create_net(self, *ports: NetMember) -> None: ...
     def add_net(self, net: Net) -> None: ...
@@ -238,6 +245,8 @@ class PlacedNetlist(Netlist):
         nb: int = ...,
         cell: str = ...,
         placement: Placement | None = ...,
+        *,
+        info: dict[str, Any] | None = ...,
     ) -> PlacedInstance: ...
     # Same parameters as the base, narrower (covariant) return type.
     def flatten(
