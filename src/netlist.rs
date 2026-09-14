@@ -6,7 +6,7 @@ use pyo3::prelude::*;
 use pyo3::types::{PyDict, PyList, PyType};
 use serde::{Deserialize, Serialize};
 
-use crate::instance::{NetlistArray, NetlistInstance, NetlistInstanceWire};
+use crate::instance::{info_from_py, NetlistArray, NetlistInstance, NetlistInstanceWire};
 use crate::net::{Net, NetMember};
 use crate::port::{NetlistPort, PortArrayRef, PortArrayRefData, PortRef};
 use crate::{
@@ -100,6 +100,7 @@ impl Netlist {
             if va.kcl != vb.kcl
                 || va.component != vb.component
                 || va.settings != vb.settings
+                || va.info != vb.info
                 || va.array != vb.array
                 || va.name != vb.name
             {
@@ -173,7 +174,8 @@ impl Netlist {
         p
     }
 
-    #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1))]
+    #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1, *, info=None))]
+    #[allow(clippy::too_many_arguments)]
     pub(crate) fn create_inst(
         &mut self,
         name: String,
@@ -182,6 +184,7 @@ impl Netlist {
         settings: Option<&Bound<'_, PyAny>>,
         na: i64,
         nb: i64,
+        info: Option<&Bound<'_, PyAny>>,
     ) -> PyResult<NetlistInstance> {
         let settings_value = match settings {
             Some(obj) if !obj.is_none() => from_py_any::<serde_json::Value>(obj)?,
@@ -199,6 +202,7 @@ impl Netlist {
             None
         };
         let inst = NetlistInstance {
+            info: info_from_py(info)?,
             kcl,
             component,
             settings: settings_value,

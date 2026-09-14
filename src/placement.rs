@@ -20,7 +20,7 @@ use pyo3::prelude::*;
 use pyo3::types::{PyDict, PyType};
 use serde::{Deserialize, Serialize};
 
-use crate::instance::{NetlistArray, NetlistInstance};
+use crate::instance::{info_from_py, NetlistArray, NetlistInstance};
 use crate::net::Net;
 use crate::netlist::Netlist;
 use crate::port::NetlistPort;
@@ -167,6 +167,8 @@ pub struct PlacedInstance {
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub(crate) struct PlacedInstanceWire {
+    #[serde(default, skip_serializing_if = "serde_json::Map::is_empty")]
+    pub info: serde_json::Map<String, serde_json::Value>,
     pub kcl: String,
     pub component: String,
     #[serde(default)]
@@ -181,6 +183,7 @@ pub(crate) struct PlacedInstanceWire {
 impl PlacedInstanceWire {
     fn from_parts(inst: &NetlistInstance, extra: &PlacedExtra) -> Self {
         Self {
+            info: inst.info.clone(),
             kcl: inst.kcl.clone(),
             component: inst.component.clone(),
             settings: if inst.settings.is_null() {
@@ -196,6 +199,7 @@ impl PlacedInstanceWire {
 
     fn into_instance(self, name: String) -> (NetlistInstance, PlacedExtra) {
         let inst = NetlistInstance {
+            info: self.info,
             kcl: self.kcl,
             component: self.component,
             settings: self.settings,
@@ -224,7 +228,8 @@ fn placed_inst_init(
 #[pymethods]
 impl PlacedInstance {
     #[new]
-    #[pyo3(signature = (kcl, component, settings=None, array=None, name=String::new(), cell=String::new(), placement=None))]
+    #[pyo3(signature = (kcl, component, settings=None, array=None, name=String::new(), cell=String::new(), placement=None, *, info=None))]
+    #[allow(clippy::too_many_arguments)]
     fn new(
         kcl: String,
         component: String,
@@ -233,12 +238,14 @@ impl PlacedInstance {
         name: String,
         cell: String,
         placement: Option<Placement>,
+        info: Option<&Bound<'_, PyAny>>,
     ) -> PyResult<PyClassInitializer<Self>> {
         let settings = match settings {
             Some(obj) if !obj.is_none() => from_py_any::<serde_json::Value>(obj)?,
             _ => serde_json::Value::Object(Default::default()),
         };
         let inst = NetlistInstance {
+            info: info_from_py(info)?,
             kcl,
             component,
             settings,
@@ -437,7 +444,7 @@ impl PlacedNetlist {
     /// [`Netlist::create_inst`] with trailing optional `cell`/`placement`;
     /// keeping the base parameter order makes this a substitutable override.
     #[allow(clippy::too_many_arguments)]
-    #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1, cell=String::new(), placement=None))]
+    #[pyo3(signature = (name, kcl, component, settings=None, na=1, nb=1, cell=String::new(), placement=None, *, info=None))]
     fn create_inst(
         mut slf: PyRefMut<'_, Self>,
         py: Python<'_>,
@@ -449,6 +456,7 @@ impl PlacedNetlist {
         nb: i64,
         cell: String,
         placement: Option<Placement>,
+        info: Option<&Bound<'_, PyAny>>,
     ) -> PyResult<Py<PlacedInstance>> {
         let extra = PlacedExtra {
             cell,
@@ -456,7 +464,7 @@ impl PlacedNetlist {
         };
         let inst = {
             let base: &mut Netlist = slf.as_mut();
-            base.create_inst(name.clone(), kcl, component, settings, na, nb)?
+            base.create_inst(name.clone(), kcl, component, settings, na, nb, info)?
         };
         slf.extras.insert(name, extra.clone());
         Py::new(py, placed_inst_init(inst, extra))
