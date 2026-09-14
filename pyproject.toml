@@ -13,7 +13,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.12"
-version = "0.2.1"
+version = "0.2.2"
 authors = [{ name = "gdsfactory community", email = "contact@gdsfactory.com" }]
 dependencies = [
     "protobuf>=7.36.1",
@@ -42,6 +42,7 @@ docs = [
 ]
 
 [tool.maturin]
+manifest-path = "crates/kfnetlist-python/Cargo.toml"
 python-source = "src"
 module-name = "kfnetlist._native"
 features = ["pyo3/extension-module"]
@@ -66,7 +67,7 @@ exclude = [
 [tool.tbump]
 
 [tool.tbump.version]
-current = "0.2.1"
+current = "0.2.2"
 regex = '''
   (?P<major>\d+)
   \.
