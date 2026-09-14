@@ -141,12 +141,18 @@ with `uv run --extra dev --with pydantic pytest`. Maturin uses the binding manif
 See [the Rust API guide](contributing/rust-core.md) for ownership, serialization,
 and compatibility details.
 
+The hierarchical PIC document and protobuf types also live in the Rust core.
+Python exposes them through `kfnetlist.kfnetlist_schema`; protobuf methods exchange
+bytes, and YAML parsing runs in Rust. See [the circuit schema guide](contributing/circuit-schema.md)
+for examples and migration notes.
+
 ## Architecture
 
 ```
 kfnetlist
 ├── _native          # Rust extension (PyO3): Netlist, Net, NetlistPort,
 │                    #   PortRef, PortArrayRef, NetlistInstance, NetlistArray
+├── kfnetlist_schema  # Native circuit/PIC types and conversion aliases
 ├── port_check       # PortCheck bitmask + check_connection()
 └── extract          # Netlist extraction from layout cells (requires klayout)
     ├── _algo        #   Main extraction orchestrator

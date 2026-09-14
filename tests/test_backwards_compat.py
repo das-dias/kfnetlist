@@ -29,6 +29,10 @@ class TestTopLevelExports:
             "PortCheck",
             "PortRef",
             "check_connection",
+            "Placement",
+            "PlacedInstance",
+            "PlacedNetlist",
+            "flatten_netlists",
         }
         assert set(kfnetlist.__all__) == expected
 

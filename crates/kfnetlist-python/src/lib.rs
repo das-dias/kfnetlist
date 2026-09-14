@@ -33,6 +33,7 @@ mod net;
 mod netlist;
 mod placement;
 mod port;
+mod schema;
 use instance::{NetlistArray, NetlistInstance};
 use net::{Net, NetIter};
 use netlist::Netlist;
@@ -41,6 +42,7 @@ use port::{NetlistPort, PortArrayRef, PortRef};
 
 #[pymodule]
 fn _native(m: &Bound<'_, PyModule>) -> PyResult<()> {
+    schema::register(m)?;
     m.add_class::<NetlistPort>()?;
     m.add_class::<PortRef>()?;
     m.add_class::<PortArrayRef>()?;

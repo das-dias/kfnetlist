@@ -1,0 +1,180 @@
+use kfnetlist_core::schema::{proto, Module, TopLevelModule};
+use kfnetlist_core::{NetMember, Netlist};
+use prost::Message;
+use serde_json::json;
+
+fn document() -> TopLevelModule {
+    serde_json::from_value(json!({
+        "modules": {"child": {"name": "display name", "settings": {"width": 0.5},
+            "instances": {"a": {"component": "coupler", "settings": {
+                "large": 9007199254740993u64, "enabled": true, "null": null,
+                "values": [1, "two"], "expr": "${settings.width}", "width": 0.5
+            }, "info": {"source": "layout"}, "array": {"na": 3, "nb": 2}}},
+            "ports": {"in": "a[0],in", "out": "a<3.2>,out"},
+            "connections": {"a<1.2>,out": "a<2.2>,in"},
+            "nets": [[], ["a,in"], ["a,in", "a[2],in", "a<3.2>,out"]],
+            "placements": {"a": {"x": "pad,e4"}}, "routes": {"optical": {"radius": 10}},
+            "info": {"description": "test"}
+        }, "parent": {"instances": {"sub": {"component": "child"}}}},
+        "toplevel": "parent"
+    }))
+    .unwrap()
+}
+
+#[test]
+fn yaml_json_and_wire_preserve_the_complete_document() {
+    let doc = document();
+    assert_eq!(
+        TopLevelModule::from_yaml(&doc.to_yaml().unwrap()).unwrap(),
+        doc
+    );
+    assert_eq!(
+        serde_json::from_str::<TopLevelModule>(&serde_json::to_string(&doc).unwrap()).unwrap(),
+        doc
+    );
+    let bytes = doc.to_proto().unwrap();
+    let circuit = proto::Circuit::decode(bytes.as_slice()).unwrap();
+    assert_eq!(circuit.top_module, "parent");
+    assert_eq!(
+        circuit.modules[0].connections[0]
+            .source
+            .as_ref()
+            .unwrap()
+            .terminal_name,
+        "out"
+    );
+    assert_eq!(TopLevelModule::from_proto(&bytes).unwrap(), doc);
+}
+
+#[test]
+fn wire_matches_a_fixed_protobuf_fixture() {
+    // Circuit.name = field 1, Circuit.top_module = field 3; wire type 2.
+    let bytes = b"\x0a\x04demo\x1a\x03top";
+    let circuit = proto::Circuit::decode(bytes.as_slice()).unwrap();
+    assert_eq!(circuit.name, "demo");
+    assert_eq!(circuit.top_module, "top");
+    assert_eq!(circuit.encode_to_vec(), bytes);
+    // TerminalReference uses the original field numbers, including Terminal_name.
+    let pin = proto::TerminalReference {
+        instance_name: "a".into(),
+        terminal_name: "p".into(),
+    };
+    assert_eq!(pin.encode_to_vec(), b"\x0a\x01a\x12\x01p");
+}
+
+#[test]
+fn terminal_alias_and_oneof_validation_work_in_rust() {
+    let pin: proto::TerminalReference =
+        serde_json::from_value(json!({"Terminal_name": "in"})).unwrap();
+    assert_eq!(pin.terminal_name, "in");
+    let parameter: proto::ParameterValue = serde_json::from_value(json!({"model_ref": {
+        "model_interface_name": "model", "arguments": {"x": {"prefixed_value": {"double_value": 2.0}}}
+    }})).unwrap();
+    assert_eq!(
+        proto::ParameterValue::decode(parameter.encode_to_vec().as_slice()).unwrap(),
+        parameter
+    );
+    assert_eq!(
+        serde_json::from_value::<proto::ParameterValue>(serde_json::to_value(&parameter).unwrap())
+            .unwrap(),
+        parameter
+    );
+    assert!(serde_json::from_value::<proto::ParameterValue>(
+        json!({"prefixed_value": {}, "model_ref": {}})
+    )
+    .is_err());
+}
+
+#[test]
+fn elaboration_preserves_arrays_connectivity_and_instance_metadata() {
+    let doc = document();
+    let netlists = doc.to_netlists().unwrap();
+    let nl = &netlists["child"];
+    assert_eq!(nl.instances["a"].info["source"], "layout");
+    assert_eq!(nl.instances["a"].array.as_ref().unwrap().nb, 2);
+    assert!(nl
+        .nets
+        .iter()
+        .flat_map(|n| &n.members)
+        .any(|m| matches!(m, NetMember::ArrayRef(p) if p.ia == 3 && p.ib == 2)));
+    let reverse = TopLevelModule::from_netlists(&netlists, Some("parent".into()));
+    assert_eq!(
+        reverse.modules["child"].instances["a"].info["source"],
+        "layout"
+    );
+    assert_eq!(reverse.to_netlists().unwrap(), netlists);
+}
+
+#[test]
+fn bare_yaml_and_array_size_shorthand() {
+    let doc = TopLevelModule::from_yaml("instances:\n  a:\n    component: coupler\n    settings: {array_size: 3}\nports: {out: 'a[2],out'}\n").unwrap();
+    assert_eq!(doc.toplevel.as_deref(), Some("__root__"));
+    let netlists = doc.to_netlists().unwrap();
+    assert_eq!(
+        netlists["__root__"].instances["a"]
+            .array
+            .as_ref()
+            .unwrap()
+            .na,
+        3
+    );
+}
+
+#[test]
+fn sample_yaml_elaborates_without_python() {
+    let doc = TopLevelModule::from_yaml(include_str!("../../../kfnetlist-schema/schema.pic.yaml"))
+        .unwrap();
+    assert_eq!(doc.to_netlists().unwrap().len(), 2);
+    assert_eq!(
+        TopLevelModule::from_proto(&doc.to_proto().unwrap()).unwrap(),
+        doc
+    );
+}
+
+#[test]
+fn bad_inputs_report_errors() {
+    assert!(TopLevelModule::from_yaml("modules: [").is_err());
+    assert!(TopLevelModule::from_proto(b"\xff").is_err());
+    let bad: TopLevelModule =
+        serde_json::from_value(json!({"modules": {"m": {}}, "toplevel": "absent"})).unwrap();
+    assert!(bad.to_netlists().is_err());
+    for reference in [
+        "a[-1],p",
+        "a<0.1>,p",
+        "a[999999999999999999999],p",
+        "a[3],p",
+        "absent,p",
+        "a,p,extra",
+    ] {
+        let doc: TopLevelModule = serde_json::from_value(json!({"instances": {"a": {"component": "x", "array": {"na": 2}}}, "ports": {"out": reference}})).unwrap();
+        assert!(doc.to_netlists().is_err(), "accepted {reference}");
+    }
+    for size in [json!(0), json!(-1), json!(2.5), json!(true), json!("two")] {
+        let doc: TopLevelModule = serde_json::from_value(
+            json!({"instances": {"a": {"component": "x", "settings": {"array_size": size}}}}),
+        )
+        .unwrap();
+        assert!(doc.to_netlists().is_err());
+    }
+    let circuit = proto::Circuit {
+        modules: vec![proto::Module {
+            properties: [("__info__".into(), "invalid json".into())].into(),
+            ..Default::default()
+        }],
+        ..Default::default()
+    };
+    assert!(TopLevelModule::from_proto_circuit(&circuit).is_err());
+}
+
+#[test]
+fn unconnected_and_multi_net_pins_are_not_lost() {
+    let mut nl = Netlist::default();
+    let p = nl.create_port("p".into());
+    nl.create_port("q".into());
+    let r = nl.create_port("r".into());
+    nl.create_net([NetMember::Port(p), NetMember::Port(r)])
+        .unwrap();
+    let module = Module::from_netlist("m".into(), &nl);
+    assert_eq!(module.ports.len(), 3);
+    assert_eq!(module.to_netlist().unwrap(), nl);
+}

@@ -15,11 +15,7 @@ classifiers = [
 requires-python = ">=3.12"
 version = "0.2.2"
 authors = [{ name = "gdsfactory community", email = "contact@gdsfactory.com" }]
-dependencies = [
-    "protobuf>=7.36.1",
-    "pydantic>=2.13.5",
-    "pydantic-yaml>=1.7.0",
-]
+dependencies = []
 
 [project.optional-dependencies]
 dev = [
@@ -57,12 +53,7 @@ exclude = ["docs"]
 python = ".venv"
 
 [tool.ty.src]
-exclude = [
-    "docs",
-    "src/kfnetlist/kfnetlist_schema/circuit_pb2.py",
-    "src/kfnetlist/kfnetlist_schema/circuit_pb2.pyi",
-    "src/kfnetlist/kfnetlist_schema/_base.py",
-]
+exclude = ["docs"]
 
 [tool.tbump]
 
