@@ -13,11 +13,9 @@ Tests for kfnetlist.kfnetlist_schema:
 
 from __future__ import annotations
 
-import json
 import pathlib
 
 import pytest
-import yaml
 
 import kfnetlist
 from kfnetlist.kfnetlist_schema import (
@@ -40,7 +38,6 @@ from kfnetlist.kfnetlist_schema import (
     top_level_module_to_netlists,
     top_level_module_to_proto_circuit,
 )
-from kfnetlist.kfnetlist_schema import circuit_pb2
 
 SCHEMA_YAML = (
     pathlib.Path(__file__).parent.parent / "kfnetlist-schema" / "schema.pic.yaml"

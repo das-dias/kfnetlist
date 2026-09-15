@@ -44,6 +44,9 @@ test-rust:
 lint:
     uv run ruff check .
 
+pre-commit:
+    uv run pre-commit run --all-files
+
 # Run formatting
 format:
     uv run ruff format .
