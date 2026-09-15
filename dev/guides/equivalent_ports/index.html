@@ -11,17 +11,17 @@
         <link rel="canonical" href="https://gdsfactory.github.io/dev/guides/equivalent_ports/">
       
       
-        <link rel="prev" href="../../extraction/port_checking/">
+        <link rel="prev" href="../lvs_verification/">
       
       
-        <link rel="next" href="../instance_flattening/">
+        <link rel="next" href="../hierarchical_flattening/">
       
       
         
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.41">
+      <meta name="generator" content="zensical-0.0.52">
     
     
       
@@ -32,7 +32,7 @@
       
         
       
-      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.fba56155.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.8b3b5a67.min.css">
       
         
           
@@ -104,7 +104,7 @@
     <a href="../.." title="kfnetlist" class="md-header__button md-logo" aria-label="kfnetlist" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
@@ -177,7 +177,7 @@
         <a href="https://github.com/gdsfactory/kfnetlist" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -288,7 +288,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="././" class="md-tabs__link">
+        <a href="../lvs_verification/" class="md-tabs__link">
           
   
   Guides
@@ -365,7 +365,7 @@
     <a href="../.." title="kfnetlist" class="md-nav__button md-logo" aria-label="kfnetlist" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
 
     </a>
     kfnetlist
@@ -375,7 +375,7 @@
       <a href="https://github.com/gdsfactory/kfnetlist" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -792,6 +792,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../extraction/l2n_parsing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  L2N Parsing
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../extraction/short_detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Short Detection
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../extraction/port_checking/" class="md-nav__link">
         
   
@@ -876,6 +930,33 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../lvs_verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  LVS Verification
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -949,10 +1030,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#applying-lvs_equivalent" class="md-nav__link">
+  <a href="#applying-normalize" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Applying <code>lvs_equivalent()</code>
+        Applying <code>normalize()</code>
       </span>
     </span>
   </a>
@@ -1030,14 +1111,95 @@
   
   
     <li class="md-nav__item">
-      <a href="../instance_flattening/" class="md-nav__link">
+      <a href="../hierarchical_flattening/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-  Instance Flattening
+  Hierarchical Flattening
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../instance_removal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Instance Removal
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../placement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Placement
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../open_detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Open Detection
 
     
   </span>
@@ -1240,6 +1402,143 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1_3" id="__nav_6_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  kfnetlist_schema
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  kfnetlist_schema
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/kfnetlist_schema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/kfnetlist_schema/circuit_pb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  circuit_pb2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/kfnetlist_schema/models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  models
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../reference/port_check/" class="md-nav__link">
         
@@ -1355,10 +1654,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#applying-lvs_equivalent" class="md-nav__link">
+  <a href="#applying-normalize" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Applying <code>lvs_equivalent()</code>
+        Applying <code>normalize()</code>
       </span>
     </span>
   </a>
@@ -1447,7 +1746,7 @@
 that are <strong>electrically equivalent</strong>: they connect to the same metal plane. A
 naive netlist comparison would fail because the extracted netlist tracks every
 individual port, while the schematic may declare only one logical connection.</p>
-<p><code>Netlist.lvs_equivalent()</code> solves this by folding equivalent ports into a
+<p><code>Netlist.normalize()</code> solves this by folding equivalent ports into a
 single canonical name, merging nets that share a canonical port.</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kfnetlist</span><span class="w"> </span><span class="kn">import</span> <span class="n">Netlist</span><span class="p">,</span> <span class="n">NetlistPort</span><span class="p">,</span> <span class="n">PortRef</span>
 </code></pre></div>
@@ -1457,32 +1756,32 @@ connected to a waveguide on one side and exposed at the cell boundary on
 the other.</p>
 <div class="highlight"><pre><span></span><code><span class="n">nl</span> <span class="o">=</span> <span class="n">Netlist</span><span class="p">()</span>
 
-<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="s2">&quot;wg1&quot;</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">&quot;PDK&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">&quot;straight&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">})</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="s2">&quot;pad1&quot;</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">&quot;PDK&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">&quot;pad&quot;</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">})</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="s2">"wg1"</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">"PDK"</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">"straight"</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s2">"width"</span><span class="p">:</span> <span class="mi">500</span><span class="p">})</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="s2">"pad1"</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">"PDK"</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">"pad"</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s2">"size"</span><span class="p">:</span> <span class="mi">5000</span><span class="p">})</span>
 
-<span class="n">p_in</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="s2">&quot;in&quot;</span><span class="p">)</span>
-<span class="n">p_out</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="s2">&quot;out&quot;</span><span class="p">)</span>
+<span class="n">p_in</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="s2">"in"</span><span class="p">)</span>
+<span class="n">p_out</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="s2">"out"</span><span class="p">)</span>
 
-<span class="c1"># Cell &quot;in&quot; → wg1.o1</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">p_in</span><span class="p">,</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;wg1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;o1&quot;</span><span class="p">))</span>
+<span class="c1"># Cell "in" → wg1.o1</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">p_in</span><span class="p">,</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"wg1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">))</span>
 
 <span class="c1"># wg1.o2 → pad1.p1</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;wg1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;o2&quot;</span><span class="p">),</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;pad1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;p1&quot;</span><span class="p">))</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"wg1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o2"</span><span class="p">),</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"pad1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"p1"</span><span class="p">))</span>
 
-<span class="c1"># pad1.p2 → cell &quot;out&quot;</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;pad1&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;p2&quot;</span><span class="p">),</span> <span class="n">p_out</span><span class="p">)</span>
+<span class="c1"># pad1.p2 → cell "out"</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"pad1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"p2"</span><span class="p">),</span> <span class="n">p_out</span><span class="p">)</span>
 
 <span class="n">nl</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Before equivalence mapping:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Before equivalence mapping:"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">net</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nl</span><span class="o">.</span><span class="n">nets</span><span class="p">):</span>
     <span class="n">members</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">net</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">PortRef</span><span class="p">):</span>
-            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">NetlistPort</span><span class="p">):</span>
-            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  net[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">&#39; — &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">members</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  net[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">' — '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">members</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>Before equivalence mapping:
   net[0]: &lt;in&gt; — wg1.o1
@@ -1491,29 +1790,29 @@ the other.</p>
 </code></pre></div>
 <p>The pad's <code>p1</code> and <code>p2</code> appear in separate nets. For netlist comparison,
 these should be treated as one.</p>
-<h2 id="applying-lvs_equivalent">Applying <code>lvs_equivalent()</code></h2>
+<h2 id="applying-normalize">Applying <code>normalize()</code></h2>
 <p>The <code>equivalent_ports</code> dict maps component names to groups of port names that
 should be merged. Within each group, the first port name becomes the canonical
 name.</p>
 <div class="highlight"><pre><span></span><code><span class="n">equivalent_ports</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;pad&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;p1&quot;</span><span class="p">,</span> <span class="s2">&quot;p2&quot;</span><span class="p">]],</span>
+    <span class="s2">"pad"</span><span class="p">:</span> <span class="p">[[</span><span class="s2">"p1"</span><span class="p">,</span> <span class="s2">"p2"</span><span class="p">]],</span>
 <span class="p">}</span>
 
-<span class="n">equiv_nl</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">lvs_equivalent</span><span class="p">(</span>
-    <span class="n">cell_name</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
+<span class="n">equiv_nl</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+    <span class="n">cell_name</span><span class="o">=</span><span class="s2">"top"</span><span class="p">,</span>
     <span class="n">equivalent_ports</span><span class="o">=</span><span class="n">equivalent_ports</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">equiv_nl</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">After equivalence mapping:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">After equivalence mapping:"</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">net</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">equiv_nl</span><span class="o">.</span><span class="n">nets</span><span class="p">):</span>
     <span class="n">members</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">net</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">PortRef</span><span class="p">):</span>
-            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">NetlistPort</span><span class="p">):</span>
-            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  net[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">&#39; — &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">members</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">members</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  net[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">' — '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">members</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>After equivalence mapping:
   net[0]: &lt;in&gt; — wg1.o1
@@ -1522,7 +1821,7 @@ name.</p>
 <p>After mapping, <code>pad1.p2</code> is rewritten to <code>pad1.p1</code>, and the two nets that
 shared a canonical port are merged into one.</p>
 <h2 id="how-it-works">How it works</h2>
-<p><code>lvs_equivalent()</code> internally uses a <strong>union-find</strong> data structure with path
+<p><code>normalize()</code> internally uses a <strong>union-find</strong> data structure with path
 compression:</p>
 <ol>
 <li>For each instance whose component has equivalent port groups, all port
@@ -1532,19 +1831,19 @@ compression:</p>
 </ol>
 <h2 id="port-mapping">Port mapping</h2>
 <p>You can also supply an explicit <code>port_mapping</code> dict for finer control:</p>
-<div class="highlight"><pre><span></span><code><span class="n">equiv_nl</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">lvs_equivalent</span><span class="p">(</span>
-    <span class="n">cell_name</span><span class="o">=</span><span class="s2">&quot;top&quot;</span><span class="p">,</span>
-    <span class="n">equivalent_ports</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pad&quot;</span><span class="p">:</span> <span class="p">[[</span><span class="s2">&quot;p1&quot;</span><span class="p">,</span> <span class="s2">&quot;p2&quot;</span><span class="p">]]},</span>
-    <span class="n">port_mapping</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pad&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;p2&quot;</span><span class="p">:</span> <span class="s2">&quot;p1&quot;</span><span class="p">}},</span>
+<div class="highlight"><pre><span></span><code><span class="n">equiv_nl</span> <span class="o">=</span> <span class="n">nl</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span>
+    <span class="n">cell_name</span><span class="o">=</span><span class="s2">"top"</span><span class="p">,</span>
+    <span class="n">equivalent_ports</span><span class="o">=</span><span class="p">{</span><span class="s2">"pad"</span><span class="p">:</span> <span class="p">[[</span><span class="s2">"p1"</span><span class="p">,</span> <span class="s2">"p2"</span><span class="p">]]},</span>
+    <span class="n">port_mapping</span><span class="o">=</span><span class="p">{</span><span class="s2">"pad"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"p2"</span><span class="p">:</span> <span class="s2">"p1"</span><span class="p">}},</span>
 <span class="p">)</span>
 </code></pre></div>
 <p>The <code>port_mapping</code> maps <code>{component_name: {from_port: to_port}}</code>. When both
 <code>equivalent_ports</code> and <code>port_mapping</code> are given, <code>equivalent_ports</code> defines
 which ports are equivalent and <code>port_mapping</code> specifies the canonical names.</p>
 <h2 id="immutability">Immutability</h2>
-<p><code>lvs_equivalent()</code> returns a <strong>new</strong> <code>Netlist</code> — the original is unchanged.</p>
+<p><code>normalize()</code> returns a <strong>new</strong> <code>Netlist</code> — the original is unchanged.</p>
 <div class="highlight"><pre><span></span><code><span class="k">assert</span> <span class="n">nl</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="o">!=</span> <span class="n">equiv_nl</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Original netlist unchanged ✓&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"Original netlist unchanged ✓"</span><span class="p">)</span>
 </code></pre></div>
 <div class="highlight"><pre><span></span><code>Original netlist unchanged ✓
 </code></pre></div>
@@ -1559,11 +1858,11 @@ which ports are equivalent and <code>port_mapping</code> specifies the canonical
 <tbody>
 <tr>
 <td>Fold equivalent ports</td>
-<td><code>nl.lvs_equivalent(cell_name, equivalent_ports)</code></td>
+<td><code>nl.normalize(cell_name, equivalent_ports)</code></td>
 </tr>
 <tr>
 <td>With explicit mapping</td>
-<td><code>nl.lvs_equivalent(cell_name, equivalent_ports, port_mapping)</code></td>
+<td><code>nl.normalize(cell_name, equivalent_ports, port_mapping)</code></td>
 </tr>
 </tbody>
 </table>
@@ -1638,10 +1937,10 @@ which ports are equivalent and <code>port_mapping</code> specifies the canonical
     
       
       
-      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.tabs.sticky"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"latest","provider":"mike"}}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.tabs.sticky"],"search":"../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"latest","provider":"mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dbc0afdc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ed145cee.min.js"></script>
       
     
   </body>

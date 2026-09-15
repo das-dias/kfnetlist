@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://gdsfactory.github.io/dev/extraction/electrical_l2n/">
+        <link rel="canonical" href="https://gdsfactory.github.io/dev/extraction/short_detection/">
       
       
-        <link rel="prev" href="../optical_nets/">
+        <link rel="prev" href="../l2n_parsing/">
       
       
-        <link rel="next" href="../l2n_parsing/">
+        <link rel="next" href="../port_checking/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Electrical Layout-to-Netlist - kfnetlist</title>
+        <title>Short Detection - kfnetlist</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#electrical-layout-to-netlist" class="md-skip">
+        <a href="#short-detection" class="md-skip">
           Skip to content
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Electrical Layout-to-Netlist
+              Short Detection
             
           </span>
         </div>
@@ -767,36 +767,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Electrical L2N
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../electrical_l2n/" class="md-nav__link">
         
   
   
@@ -811,99 +785,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#how-it-works" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        How it works
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#function-signature" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Function signature
-      </span>
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Function signature">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Parameters
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#returns" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Returns
-      </span>
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#port-mapping" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Port mapping
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        See Also
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -940,10 +821,36 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../short_detection/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Short Detection
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -958,6 +865,126 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Functions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        How it works
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shortresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        <code>ShortResult</code>
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Parameters
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Example
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#interpreting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Interpreting results
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-short-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Building a short summary
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filtering-by-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Filtering by layer
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        See Also
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1638,6 +1665,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Functions
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#how-it-works" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1649,18 +1687,17 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#function-signature" class="md-nav__link">
+  <a href="#shortresult" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Function signature
+        <code>ShortResult</code>
       </span>
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Function signature">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
+</li>
+      
+        <li class="md-nav__item">
   <a href="#parameters" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -1670,28 +1707,45 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#returns" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Returns
+        Example
       </span>
     </span>
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#interpreting-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Interpreting results
+      </span>
+    </span>
+  </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#port-mapping" class="md-nav__link">
+  <a href="#building-a-short-summary" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Port mapping
+        Building a short summary
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filtering-by-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Filtering by layer
       </span>
     </span>
   </a>
@@ -1730,67 +1784,135 @@
   
 
 
-<h1 id="electrical-layout-to-netlist">Electrical Layout-to-Netlist</h1>
-<p><code>l2n_elec()</code> builds a klayout <code>LayoutToNetlist</code> object from electrical port
-markers. It handles the electrical side of netlist extraction, complementing the
-geometric optical extraction.</p>
+<p><a class="md-button" href="../short_detection/short_detection.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> Download notebook (.ipynb)</a></p>
+<h1 id="short-detection">Short Detection</h1>
+<p>The <code>kfnetlist.extract</code> module provides geometric short detection using
+boolean polygon intersection on <code>LayoutToNetlist</code> shape data.  After
+running klayout's L2N extraction, <code>detect_shorts()</code> finds unexpected
+overlaps between electrically distinct nets on the same layer.</p>
+<h2 id="functions">Functions</h2>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Returns</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>detect_shorts(l2n, ...)</code></td>
+<td><code>list[ShortResult]</code></td>
+<td>Find polygon overlaps between different nets</td>
+</tr>
+</tbody>
+</table>
 <h2 id="how-it-works">How it works</h2>
-<ol>
-<li><strong>Duplicate the layout</strong> — works on a copy to avoid mutating the original</li>
-<li><strong>Materialize port markers</strong> — for each cell in the hierarchy, ports whose
-   <code>port_type</code> is in <code>mark_port_types</code> are written as <code>kdb.Text</code> shapes on
-   their respective layers</li>
-<li><strong>Apply connectivity rules</strong> — layers from the <code>connectivity</code> sequence are
-   connected together in the L2N engine</li>
-<li><strong>Extract</strong> — klayout runs its built-in extraction and error checking</li>
-</ol>
-<h2 id="function-signature">Function signature</h2>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">l2n_elec</span><span class="p">(</span>
-    <span class="n">cell</span><span class="p">:</span> <span class="n">RootCellLike</span><span class="p">,</span>
-    <span class="n">mark_port_types</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"electrical"</span><span class="p">,</span> <span class="s2">"RF"</span><span class="p">,</span> <span class="s2">"DC"</span><span class="p">),</span>
-    <span class="n">connectivity</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">kdb</span><span class="o">.</span><span class="n">LayerInfo</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">port_mapping</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">kdb</span><span class="o">.</span><span class="n">LayoutToNetlist</span><span class="p">:</span>
+<p>For each layer (or a restricted set via <code>short_layers</code>), <code>detect_shorts()</code>
+collects every net's shapes and checks all pairwise intersections using
+<code>Region.__and__</code> (boolean AND).  Any non-empty intersection means the two
+nets overlap geometrically — a potential short.</p>
+<div class="highlight"><pre><span></span><code>detect_shorts(l2n)
+    │
+    ├── discover layer regions from L2N
+    ├── for each layer:
+    │   ├── collect shapes per net
+    │   └── for each (net_a, net_b) pair:
+    │       └── overlap = shapes_a &amp; shapes_b
+    │           └── if non-empty → ShortResult
+    └── return list[ShortResult]
 </code></pre></div>
-<h3 id="parameters">Parameters</h3>
+<h2 id="shortresult"><code>ShortResult</code></h2>
+<p>Each detected short is returned as a dataclass:</p>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ShortResult</span><span class="p">:</span>
+    <span class="n">net_a</span><span class="p">:</span> <span class="nb">str</span>        <span class="c1"># first net name</span>
+    <span class="n">net_b</span><span class="p">:</span> <span class="nb">str</span>        <span class="c1"># second net name</span>
+    <span class="n">layer</span><span class="p">:</span> <span class="nb">str</span>        <span class="c1"># layer display name</span>
+    <span class="n">overlap</span><span class="p">:</span> <span class="n">Region</span>   <span class="c1"># the overlapping polygon region</span>
+</code></pre></div>
+<h2 id="parameters">Parameters</h2>
 <table>
 <thead>
 <tr>
 <th>Parameter</th>
+<th>Type</th>
 <th>Default</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>cell</code></td>
-<td>—</td>
-<td>Root cell to extract from (protocol-typed)</td>
+<td><code>l2n</code></td>
+<td><code>kdb.LayoutToNetlist</code></td>
+<td><em>(required)</em></td>
+<td>Completed extraction</td>
 </tr>
 <tr>
-<td><code>mark_port_types</code></td>
-<td><code>("electrical", "RF", "DC")</code></td>
-<td>Port types to materialize as text markers</td>
-</tr>
-<tr>
-<td><code>connectivity</code></td>
-<td><code>None</code> (uses <code>cell.kcl.connectivity</code>)</td>
-<td>Layer connectivity rules</td>
-</tr>
-<tr>
-<td><code>port_mapping</code></td>
+<td><code>short_layers</code></td>
+<td><code>Sequence[LayerInfo] \| None</code></td>
 <td><code>None</code></td>
-<td>Remap port names before marking (used with equivalent ports)</td>
+<td>Restrict to these layers (<code>None</code> = all)</td>
+</tr>
+<tr>
+<td><code>circuit_name</code></td>
+<td><code>str \| None</code></td>
+<td><code>None</code></td>
+<td>Circuit to inspect (defaults to top cell)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="returns">Returns</h3>
-<p>A <code>kdb.LayoutToNetlist</code> object with the extracted electrical netlist.</p>
-<h2 id="port-mapping">Port mapping</h2>
-<p>When <code>port_mapping</code> is provided, ports whose names appear in the mapping for
-their cell are renamed before materialization. This collapses multiple
-equivalent ports into a single canonical port name, preventing them from being
-marked as separate electrical nodes.</p>
+<h2 id="example">Example</h2>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kfnetlist.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_shorts</span>
+
+<span class="n">shorts</span> <span class="o">=</span> <span class="n">detect_shorts</span><span class="p">(</span><span class="n">l2n</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shorts</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Short: </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">net_a</span><span class="si">}</span><span class="s2"> &lt;-&gt; </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">net_b</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">layer</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="interpreting-results">Interpreting results</h2>
+<p>Each <code>ShortResult</code> carries enough data to locate and measure the short:</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shorts</span><span class="p">:</span>
+    <span class="c1"># Area of the overlapping region (in dbu^2)</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">overlap</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
+
+    <span class="c1"># Bounding box for quick localization</span>
+    <span class="n">bbox</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">overlap</span><span class="o">.</span><span class="n">bbox</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">net_a</span><span class="si">}</span><span class="s2"> &lt;-&gt; </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">net_b</span><span class="si">}</span><span class="s2"> on </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">layer</span><span class="si">}</span><span class="s2">: "</span>
+          <span class="sa">f</span><span class="s2">"area=</span><span class="si">{</span><span class="n">area</span><span class="si">}</span><span class="s2"> dbu^2, bbox=</span><span class="si">{</span><span class="n">bbox</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>To count distinct shorted net pairs (a single pair can appear on
+multiple layers):</p>
+<div class="highlight"><pre><span></span><code><span class="n">pairs</span> <span class="o">=</span> <span class="p">{(</span><span class="n">s</span><span class="o">.</span><span class="n">net_a</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">net_b</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shorts</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span><span class="si">}</span><span class="s2"> distinct net pair(s) shorted"</span><span class="p">)</span>
+</code></pre></div>
+<p>In LVS terms, every <code>ShortResult</code> is a <strong>short circuit error</strong> — two
+nets that should be electrically isolated have overlapping geometry.</p>
+<h2 id="building-a-short-summary">Building a short summary</h2>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">summarize_shorts</span><span class="p">(</span><span class="n">shorts</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Build a one-line summary from detect_shorts() output."""</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">shorts</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"PASS: no shorts detected"</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="p">{(</span><span class="n">s</span><span class="o">.</span><span class="n">net_a</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">net_b</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shorts</span><span class="p">}</span>
+    <span class="n">layers</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="o">.</span><span class="n">layer</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">shorts</span><span class="p">}</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"FAIL: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">shorts</span><span class="p">)</span><span class="si">}</span><span class="s2"> short(s) between "</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span><span class="si">}</span><span class="s2"> net pair(s) on </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span><span class="si">}</span><span class="s2"> layer(s)"</span>
+    <span class="p">)</span>
+</code></pre></div>
+<h2 id="filtering-by-layer">Filtering by layer</h2>
+<p>Use the <code>short_layers</code> parameter to restrict detection to specific
+layers. This is useful when only certain metal layers carry routed
+signals:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">klayout</span><span class="w"> </span><span class="kn">import</span> <span class="n">db</span> <span class="k">as</span> <span class="n">kdb</span>
+
+<span class="c1"># Only check M1 and M2</span>
+<span class="n">shorts</span> <span class="o">=</span> <span class="n">detect_shorts</span><span class="p">(</span>
+    <span class="n">l2n</span><span class="p">,</span>
+    <span class="n">short_layers</span><span class="o">=</span><span class="p">[</span><span class="n">kdb</span><span class="o">.</span><span class="n">LayerInfo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">kdb</span><span class="o">.</span><span class="n">LayerInfo</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
+<span class="p">)</span>
+</code></pre></div>
 <h2 id="see-also">See Also</h2>
 <table>
 <thead>
@@ -1801,16 +1923,20 @@ marked as separate electrical nodes.</p>
 </thead>
 <tbody>
 <tr>
-<td>Optical extraction</td>
-<td><a href="../optical_nets/">Optical Nets</a></td>
+<td>LVS verification workflow</td>
+<td><a href="../../guides/lvs_verification/">LVS Verification</a></td>
 </tr>
 <tr>
-<td>Full extraction pipeline</td>
-<td><a href="../overview/">Extraction Overview</a></td>
+<td>L2N parsing</td>
+<td><a href="../l2n_parsing/">L2N Parsing</a></td>
 </tr>
 <tr>
-<td>Equivalent ports</td>
-<td><a href="../../guides/equivalent_ports/">Guides: Equivalent Ports</a></td>
+<td>Open detection</td>
+<td><a href="../../guides/open_detection/">Open Detection</a></td>
+</tr>
+<tr>
+<td>Extraction overview</td>
+<td><a href="../overview/">Overview</a></td>
 </tr>
 </tbody>
 </table>

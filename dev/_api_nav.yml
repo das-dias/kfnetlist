@@ -1,3 +1,7 @@
           - Overview: reference/index.md
           - extract: reference/extract/index.md
+          - kfnetlist_schema:
+              - Overview: reference/kfnetlist_schema/index.md
+              - circuit_pb2: reference/kfnetlist_schema/circuit_pb2.md
+              - models: reference/kfnetlist_schema/models.md
           - port_check: reference/port_check.md

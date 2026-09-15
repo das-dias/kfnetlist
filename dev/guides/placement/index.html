@@ -8,13 +8,13 @@
       
       
       
-        <link rel="canonical" href="https://gdsfactory.github.io/dev/concepts/ports_and_refs/">
+        <link rel="canonical" href="https://gdsfactory.github.io/dev/guides/placement/">
       
       
-        <link rel="prev" href="../netlist_model/">
+        <link rel="prev" href="../instance_removal/">
       
       
-        <link rel="next" href="../serialization/">
+        <link rel="next" href="../open_detection/">
       
       
         
@@ -25,7 +25,7 @@
     
     
       
-        <title>Ports & Refs - kfnetlist</title>
+        <title>Placement-Aware Netlists - kfnetlist</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ports-refs" class="md-skip">
+        <a href="#placement-aware-netlists" class="md-skip">
           Skip to content
         </a>
       
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ports &amp; Refs
+              Placement-Aware Netlists
             
           </span>
         </div>
@@ -235,16 +235,14 @@
   
   
   
-    
-  
   
     
       
     
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../netlist_model/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../concepts/netlist_model/" class="md-tabs__link">
           
   
   Concepts
@@ -281,14 +279,16 @@
   
   
   
+    
+  
   
     
       
     
     
     
-      <li class="md-tabs__item">
-        <a href="../../guides/lvs_verification/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../lvs_verification/" class="md-tabs__link">
           
   
   Guides
@@ -524,29 +524,24 @@
       
   
   
-    
   
   
-  
     
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -563,7 +558,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -580,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../netlist_model/" class="md-nav__link">
+      <a href="../../concepts/netlist_model/" class="md-nav__link">
         
   
   
@@ -604,36 +599,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Ports & Refs
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../concepts/ports_and_refs/" class="md-nav__link">
         
   
   
@@ -648,115 +617,6 @@
   
 
       </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#netlistport" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        NetlistPort
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#portref" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        PortRef
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#portarrayref" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        PortArrayRef
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ordering" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Ordering
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hashing-and-equality" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Hashing and equality
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#serialization" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Serialization
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Summary
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        See Also
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -769,7 +629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../serialization/" class="md-nav__link">
+      <a href="../../concepts/serialization/" class="md-nav__link">
         
   
   
@@ -1017,24 +877,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -1051,7 +916,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1068,7 +933,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/lvs_verification/" class="md-nav__link">
+      <a href="../lvs_verification/" class="md-nav__link">
         
   
   
@@ -1095,7 +960,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/equivalent_ports/" class="md-nav__link">
+      <a href="../equivalent_ports/" class="md-nav__link">
         
   
   
@@ -1122,7 +987,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/hierarchical_flattening/" class="md-nav__link">
+      <a href="../hierarchical_flattening/" class="md-nav__link">
         
   
   
@@ -1149,7 +1014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/instance_removal/" class="md-nav__link">
+      <a href="../instance_removal/" class="md-nav__link">
         
   
   
@@ -1173,10 +1038,36 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../guides/placement/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Placement
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1191,6 +1082,82 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#building-a-placed-netlist-directly" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Building a placed netlist directly
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-placement" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Inspecting placement
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Serialization
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrading-an-existing-netlist" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Upgrading an existing netlist
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#from-extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        From extraction
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1203,7 +1170,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/open_detection/" class="md-nav__link">
+      <a href="../open_detection/" class="md-nav__link">
         
   
   
@@ -1230,7 +1197,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../guides/faq/" class="md-nav__link">
+      <a href="../faq/" class="md-nav__link">
         
   
   
@@ -1654,10 +1621,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#netlistport" class="md-nav__link">
+  <a href="#building-a-placed-netlist-directly" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        NetlistPort
+        Building a placed netlist directly
       </span>
     </span>
   </a>
@@ -1665,43 +1632,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#portref" class="md-nav__link">
+  <a href="#inspecting-placement" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        PortRef
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#portarrayref" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        PortArrayRef
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ordering" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Ordering
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#hashing-and-equality" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Hashing and equality
+        Inspecting placement
       </span>
     </span>
   </a>
@@ -1720,10 +1654,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
+  <a href="#upgrading-an-existing-netlist" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Summary
+        Upgrading an existing netlist
       </span>
     </span>
   </a>
@@ -1731,10 +1665,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
+  <a href="#from-extraction" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        See Also
+        From extraction
       </span>
     </span>
   </a>
@@ -1762,170 +1696,200 @@
   
 
 
-<p><a class="md-button" href="../ports_and_refs/ports_and_refs.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> Download notebook (.ipynb)</a></p>
-<h1 id="ports-refs">Ports &amp; Refs</h1>
-<p>kfnetlist uses three types to identify connection points in a netlist. Each
-type is a Rust-backed, hashable, orderable value object.</p>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Use case</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>NetlistPort</code></td>
-<td>Cell-level port — a top-level pin visible outside the cell</td>
-</tr>
-<tr>
-<td><code>PortRef</code></td>
-<td>Reference to a port on a named instance</td>
-</tr>
-<tr>
-<td><code>PortArrayRef</code></td>
-<td>Reference to a port on a specific element of an array instance</td>
-</tr>
-</tbody>
-</table>
-<p>All three are valid <strong>net members</strong> — they can be passed to <code>Netlist.create_net()</code>
-and stored inside a <code>Net</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kfnetlist</span><span class="w"> </span><span class="kn">import</span> <span class="n">NetlistPort</span><span class="p">,</span> <span class="n">PortArrayRef</span><span class="p">,</span> <span class="n">PortRef</span>
+<p><a class="md-button" href="../placement/placement.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> Download notebook (.ipynb)</a></p>
+<h1 id="placement-aware-netlists">Placement-Aware Netlists</h1>
+<p>A plain <a href="../../concepts/netlist_model/"><code>Netlist</code></a> captures <strong>connectivity</strong>:
+instances, nets, and ports. Some workflows — simulation setup, floorplanning,
+visualization — also need to know <strong>where</strong> each instance physically sits in
+the layout.</p>
+<p><code>PlacedNetlist</code> is a second flavor for exactly that. It is a subclass of
+<code>Netlist</code> (so all connectivity behaviour is inherited unchanged) whose
+instances are <code>PlacedInstance</code> objects. Each <code>PlacedInstance</code> adds:</p>
+<ul>
+<li><strong><code>cell</code></strong> — the placed cell's name (distinct from <code>component</code>, which is the
+  factory name);</li>
+<li><strong><code>placement</code></strong> — a purely geometric <code>Placement</code>: origin <code>x</code>/<code>y</code>,
+  <code>orientation</code>, <code>mirror</code>, and <code>bbox</code>.</li>
+</ul>
+<p><code>Placement</code> describes <em>where</em> an instance is; the <code>cell</code> name (what it <em>is</em>)
+lives on the instance, not inside the placement.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">kfnetlist</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Netlist</span><span class="p">,</span>
+    <span class="n">NetlistPort</span><span class="p">,</span>
+    <span class="n">Placement</span><span class="p">,</span>
+    <span class="n">PlacedInstance</span><span class="p">,</span>
+    <span class="n">PlacedNetlist</span><span class="p">,</span>
+    <span class="n">PortRef</span><span class="p">,</span>
+<span class="p">)</span>
 </code></pre></div>
-<h2 id="netlistport">NetlistPort</h2>
-<p>A <code>NetlistPort</code> represents a cell-level port identified solely by its name.</p>
-<div class="highlight"><pre><span></span><code><span class="n">p</span> <span class="o">=</span> <span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"in"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"name: </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"hash: </span><span class="si">{</span><span class="nb">hash</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"equal: </span><span class="si">{</span><span class="n">p</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'in'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<h2 id="building-a-placed-netlist-directly">Building a placed netlist directly</h2>
+<p><code>PlacedNetlist.create_inst()</code> mirrors <code>Netlist.create_inst()</code> with two extra
+trailing arguments: the placed <code>cell</code> name and a <code>placement</code>. The bounding
+box is a plain dict in klayout <code>left/bottom/right/top</code> convention (µm).</p>
+<div class="highlight"><pre><span></span><code><span class="n">pnl</span> <span class="o">=</span> <span class="n">PlacedNetlist</span><span class="p">()</span>
+
+<span class="n">pnl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"wg1"</span><span class="p">,</span>
+    <span class="n">kcl</span><span class="o">=</span><span class="s2">"PDK"</span><span class="p">,</span>
+    <span class="n">component</span><span class="o">=</span><span class="s2">"straight_factory"</span><span class="p">,</span>  <span class="c1"># factory / parametric-cell name</span>
+    <span class="n">settings</span><span class="o">=</span><span class="p">{</span><span class="s2">"width"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
+    <span class="n">cell</span><span class="o">=</span><span class="s2">"straight"</span><span class="p">,</span>  <span class="c1"># the actual layout cell name</span>
+    <span class="n">placement</span><span class="o">=</span><span class="n">Placement</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">orientation</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">mirror</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s2">"left"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"bottom"</span><span class="p">:</span> <span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="s2">"top"</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">},</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">pnl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">"bend1"</span><span class="p">,</span>
+    <span class="n">kcl</span><span class="o">=</span><span class="s2">"PDK"</span><span class="p">,</span>
+    <span class="n">component</span><span class="o">=</span><span class="s2">"bend_euler"</span><span class="p">,</span>
+    <span class="n">cell</span><span class="o">=</span><span class="s2">"bend_euler"</span><span class="p">,</span>
+    <span class="n">placement</span><span class="o">=</span><span class="n">Placement</span><span class="p">(</span>
+        <span class="n">x</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">y</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
+        <span class="n">orientation</span><span class="o">=</span><span class="mf">90.0</span><span class="p">,</span>
+        <span class="n">mirror</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s2">"left"</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="s2">"bottom"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">:</span> <span class="mf">15.0</span><span class="p">,</span> <span class="s2">"top"</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">},</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="c1"># Connectivity works exactly as on a plain Netlist.</span>
+<span class="n">pnl</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="s2">"o1"</span><span class="p">)</span>
+<span class="n">pnl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">),</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"wg1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">))</span>
+<span class="n">pnl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"wg1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o2"</span><span class="p">),</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"bend1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">))</span>
+<span class="n">pnl</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>name: in
-hash: 3504002876683576982
-equal: True
+<p>A <code>PlacedNetlist</code> <em>is</em> a <code>Netlist</code>, so connectivity tooling keeps working:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="s2">"isinstance(pnl, Netlist):"</span><span class="p">,</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">pnl</span><span class="p">,</span> <span class="n">Netlist</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"instance names:"</span><span class="p">,</span> <span class="n">pnl</span><span class="o">.</span><span class="n">instance_names</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"nets:"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">net</span> <span class="ow">in</span> <span class="n">pnl</span><span class="o">.</span><span class="n">nets</span><span class="p">:</span>
+    <span class="n">members</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">PortRef</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;"</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">net</span>
+    <span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"  -"</span><span class="p">,</span> <span class="s2">" — "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">members</span><span class="p">))</span>
 </code></pre></div>
-<h2 id="portref">PortRef</h2>
-<p>A <code>PortRef</code> identifies a port on a specific instance by instance name and
-port name.</p>
-<div class="highlight"><pre><span></span><code><span class="n">ref</span> <span class="o">=</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"mmi1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o2"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"instance: </span><span class="si">{</span><span class="n">ref</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">, port: </span><span class="si">{</span><span class="n">ref</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"hash: </span><span class="si">{</span><span class="nb">hash</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code>isinstance(pnl, Netlist): True
+instance names: ['bend1', 'wg1']
+nets:
+  - &lt;o1&gt; — wg1.o1
+  - bend1.o1 — wg1.o2
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>instance: mmi1, port: o2
-hash: -3758625386664795898
+<h2 id="inspecting-placement">Inspecting placement</h2>
+<p><code>instances</code> returns <code>PlacedInstance</code> objects (cell + placement); <code>placements</code>
+is a convenience map of just the geometry, keyed by instance name.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">pnl</span><span class="o">.</span><span class="n">instances</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">inst</span><span class="o">.</span><span class="n">placement</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: cell=</span><span class="si">{</span><span class="n">inst</span><span class="o">.</span><span class="n">cell</span><span class="si">!r}</span><span class="s2"> component=</span><span class="si">{</span><span class="n">inst</span><span class="o">.</span><span class="n">component</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"    origin=(</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">) µm, orientation=</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">orientation</span><span class="si">}</span><span class="s2">°, mirror=</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">mirror</span><span class="si">}</span><span class="s2">"</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"    bbox=</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">bbox</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div>
-<p><code>as_python_str()</code> returns a human-readable representation, optionally using
-a custom instance variable name.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">as_python_str</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">as_python_str</span><span class="p">(</span><span class="s2">"splitter"</span><span class="p">))</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>mmi1['o2']
-splitter['o2']
-</code></pre></div>
-<h2 id="portarrayref">PortArrayRef</h2>
-<p>A <code>PortArrayRef</code> extends <code>PortRef</code> with array indices <code>ia</code> and <code>ib</code> to
-identify a port on a specific element of an array instance.</p>
-<div class="highlight"><pre><span></span><code><span class="n">aref</span> <span class="o">=</span> <span class="n">PortArrayRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"pad_array"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"p1"</span><span class="p">,</span> <span class="n">ia</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ib</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"instance: </span><span class="si">{</span><span class="n">aref</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">, port: </span><span class="si">{</span><span class="n">aref</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">, ia: </span><span class="si">{</span><span class="n">aref</span><span class="o">.</span><span class="n">ia</span><span class="si">}</span><span class="s2">, ib: </span><span class="si">{</span><span class="n">aref</span><span class="o">.</span><span class="n">ib</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">aref</span><span class="o">.</span><span class="n">as_python_str</span><span class="p">())</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>instance: pad_array, port: p1, ia: 2, ib: 0
-pad_array['p1', 2, 0]
-</code></pre></div>
-<h2 id="ordering">Ordering</h2>
-<p>The three types have a defined ordering: <code>NetlistPort &lt; PortRef &lt; PortArrayRef</code>.
-Within each type, ordering is lexicographic by fields. This ordering is used
-by <code>Net.sort()</code> and <code>Netlist.sort()</code> to produce stable, reproducible output.</p>
-<div class="highlight"><pre><span></span><code><span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"b"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">),</span>
-    <span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"out"</span><span class="p">),</span>
-    <span class="n">PortArrayRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"p1"</span><span class="p">,</span> <span class="n">ia</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ib</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-    <span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"in"</span><span class="p">),</span>
-    <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">),</span>
-<span class="p">]</span>
-<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">item</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>  NetlistPort: NetlistPort(name='in')
-  NetlistPort: NetlistPort(name='out')
-  PortRef: a['o1']
-  PortRef: b['o1']
-  PortArrayRef: a['p1', 0, 0]
-</code></pre></div>
-<h2 id="hashing-and-equality">Hashing and equality</h2>
-<p>All three types are hashable and support equality comparison, so they can be
-used in sets and as dict keys.</p>
-<div class="highlight"><pre><span></span><code><span class="n">s</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"in"</span><span class="p">),</span>
-    <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"wg1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">),</span>
-    <span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"in"</span><span class="p">),</span>  <span class="c1"># duplicate</span>
-<span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Set size (with duplicate): </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"b"</span><span class="p">)</span> <span class="o">==</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"a"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"b"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Equality ✓"</span><span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>Set size (with duplicate): 2
-Equality ✓
+<div class="highlight"><pre><span></span><code>bend1: cell='bend_euler' component='bend_euler'
+    origin=(10.0, 0.0) µm, orientation=90.0°, mirror=False
+    bbox={'left': 10.0, 'bottom': 0.0, 'right': 15.0, 'top': 5.0}
+wg1: cell='straight' component='straight_factory'
+    origin=(0.0, 0.0) µm, orientation=0.0°, mirror=False
+    bbox={'left': 0.0, 'bottom': -0.25, 'right': 10.0, 'top': 0.25}
 </code></pre></div>
 <h2 id="serialization">Serialization</h2>
-<p>Each type supports <code>to_json()</code> / <code>from_json()</code> and <code>to_dict()</code> / <code>from_dict()</code>.</p>
-<div class="highlight"><pre><span></span><code><span class="n">ref</span> <span class="o">=</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"mmi1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o2"</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"JSON:"</span><span class="p">,</span> <span class="n">ref</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Dict:"</span><span class="p">,</span> <span class="n">ref</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+<p><code>PlacedNetlist</code> round-trips through JSON and dicts like every other type. The
+<code>cell</code> sits alongside the connectivity fields, and <code>placement</code> is a nested
+block per instance.</p>
+<div class="highlight"><pre><span></span><code><span class="n">d</span> <span class="o">=</span> <span class="n">pnl</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s2">"instances"</span><span class="p">][</span><span class="s2">"bend1"</span><span class="p">],</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>{
+  "kcl": "PDK",
+  "component": "bend_euler",
+  "settings": {},
+  "array": {
+    "na": 1,
+    "nb": 1
+  },
+  "cell": "bend_euler",
+  "placement": {
+    "x": 10.0,
+    "y": 0.0,
+    "orientation": 90.0,
+    "mirror": false,
+    "bbox": {
+      "left": 10.0,
+      "bottom": 0.0,
+      "right": 15.0,
+      "top": 5.0
+    }
+  }
+}
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">restored</span> <span class="o">=</span> <span class="n">PlacedNetlist</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">pnl</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
+<span class="k">assert</span> <span class="n">restored</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="s2">"bend1"</span><span class="p">]</span><span class="o">.</span><span class="n">placement</span> <span class="o">==</span> <span class="n">pnl</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="s2">"bend1"</span><span class="p">]</span><span class="o">.</span><span class="n">placement</span>
+<span class="k">assert</span> <span class="n">restored</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="s2">"bend1"</span><span class="p">]</span><span class="o">.</span><span class="n">cell</span> <span class="o">==</span> <span class="s2">"bend_euler"</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"round-trip OK"</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>round-trip OK
+</code></pre></div>
+<h2 id="upgrading-an-existing-netlist">Upgrading an existing netlist</h2>
+<p>If you already have a plain <code>Netlist</code> (e.g. from another tool), attach
+placement with <code>from_netlist()</code>. It takes the netlist plus two name-keyed
+maps — <code>placements</code> and <code>cells</code> — and keeps only entries for instances that
+actually exist. Instances without an entry get empty defaults.</p>
+<div class="highlight"><pre><span></span><code><span class="n">nl</span> <span class="o">=</span> <span class="n">Netlist</span><span class="p">()</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"mmi1"</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">"PDK"</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">"mmi1x2"</span><span class="p">)</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_port</span><span class="p">(</span><span class="s2">"in"</span><span class="p">)</span>
+<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span><span class="n">NetlistPort</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"in"</span><span class="p">),</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">"mmi1"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">"o1"</span><span class="p">))</span>
 
-<span class="n">ref2</span> <span class="o">=</span> <span class="n">PortRef</span><span class="o">.</span><span class="n">from_json</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">to_json</span><span class="p">())</span>
-<span class="k">assert</span> <span class="n">ref</span> <span class="o">==</span> <span class="n">ref2</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">"Round-trip ✓"</span><span class="p">)</span>
+<span class="n">placed</span> <span class="o">=</span> <span class="n">PlacedNetlist</span><span class="o">.</span><span class="n">from_netlist</span><span class="p">(</span>
+    <span class="n">nl</span><span class="p">,</span>
+    <span class="n">placements</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">"mmi1"</span><span class="p">:</span> <span class="n">Placement</span><span class="p">(</span>
+            <span class="n">x</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+            <span class="n">y</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+            <span class="n">orientation</span><span class="o">=</span><span class="mf">180.0</span><span class="p">,</span>
+            <span class="n">mirror</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s2">"left"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"bottom"</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s2">"right"</span><span class="p">:</span> <span class="mf">6.0</span><span class="p">,</span> <span class="s2">"top"</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">},</span>
+        <span class="p">)</span>
+    <span class="p">},</span>
+    <span class="n">cells</span><span class="o">=</span><span class="p">{</span><span class="s2">"mmi1"</span><span class="p">:</span> <span class="s2">"mmi1x2"</span><span class="p">},</span>
+<span class="p">)</span>
+
+<span class="n">mmi</span> <span class="o">=</span> <span class="n">placed</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="s2">"mmi1"</span><span class="p">]</span>
+<span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mmi</span><span class="p">,</span> <span class="n">PlacedInstance</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"cell:"</span><span class="p">,</span> <span class="n">mmi</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="s2">"| placement:"</span><span class="p">,</span> <span class="n">mmi</span><span class="o">.</span><span class="n">placement</span><span class="p">)</span>
+<span class="c1"># Connectivity carried over unchanged.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"nets preserved:"</span><span class="p">,</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">(</span><span class="n">o</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">placed</span><span class="o">.</span><span class="n">nets</span><span class="p">,</span> <span class="n">nl</span><span class="o">.</span><span class="n">nets</span><span class="p">)])</span>
 </code></pre></div>
-<div class="highlight"><pre><span></span><code>JSON: {"instance":"mmi1","port":"o2"}
-Dict: {'instance': 'mmi1', 'port': 'o2'}
-Round-trip ✓
+<div class="highlight"><pre><span></span><code>cell: mmi1x2 | placement: Placement(x=2, y=1, orientation=180, mirror=true)
+nets preserved: [True]
 </code></pre></div>
-<h2 id="summary">Summary</h2>
-<table>
-<thead>
-<tr>
-<th>Type</th>
-<th>Fields</th>
-<th>Purpose</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>NetlistPort</code></td>
-<td><code>name</code></td>
-<td>Cell-level port</td>
-</tr>
-<tr>
-<td><code>PortRef</code></td>
-<td><code>instance</code>, <code>port</code></td>
-<td>Port on a named instance</td>
-</tr>
-<tr>
-<td><code>PortArrayRef</code></td>
-<td><code>instance</code>, <code>port</code>, <code>ia</code>, <code>ib</code></td>
-<td>Port on an array element</td>
-</tr>
-</tbody>
-</table>
-<h2 id="see-also">See Also</h2>
-<table>
-<thead>
-<tr>
-<th>Topic</th>
-<th>Where</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Netlist data model</td>
-<td><a href="../netlist_model/">Netlist Model</a></td>
-</tr>
-<tr>
-<td>Serialization details</td>
-<td><a href="../serialization/">Serialization</a></td>
-</tr>
-</tbody>
-</table>
+<h2 id="from-extraction">From extraction</h2>
+<p>When extracting from a layout, pass <code>include_placement=True</code> to <code>extract()</code>.
+Each returned value is then a <code>PlacedNetlist</code> instead of a <code>Netlist</code>, with the
+placed cell name and placement read from the layout for every surviving
+instance:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kfnetlist.extract</span><span class="w"> </span><span class="kn">import</span> <span class="n">extract</span>
+
+<span class="n">netlists</span> <span class="o">=</span> <span class="n">extract</span><span class="p">(</span>
+    <span class="n">cell</span><span class="p">,</span>
+    <span class="n">wrap_kdb_instance</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">Instance</span><span class="p">(</span><span class="n">kcl</span><span class="o">=</span><span class="n">cell</span><span class="o">.</span><span class="n">kcl</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="n">i</span><span class="p">),</span>
+    <span class="n">include_placement</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">placed</span> <span class="o">=</span> <span class="n">netlists</span><span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>          <span class="c1"># a PlacedNetlist</span>
+<span class="n">placed</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="s2">"wg1"</span><span class="p">]</span><span class="o">.</span><span class="n">placement</span><span class="o">.</span><span class="n">x</span>   <span class="c1"># origin x in µm</span>
+<span class="n">placed</span><span class="o">.</span><span class="n">instances</span><span class="p">[</span><span class="s2">"wg1"</span><span class="p">]</span><span class="o">.</span><span class="n">cell</span>          <span class="c1"># the placed cell name</span>
+</code></pre></div>
+<p>The default (<code>include_placement=False</code>) returns plain <code>Netlist</code> objects,
+identical to before — placement never changes connectivity, and is excluded
+from equality so LVS comparisons are unaffected.</p>
+<p>See <a href="../../extraction/overview/">Extraction Overview</a> for the full pipeline.</p>
 
 
 

@@ -8,31 +8,31 @@
       
       
       
-        <link rel="canonical" href="https://gdsfactory.github.io/dev/guides/instance_flattening/">
+        <link rel="canonical" href="https://gdsfactory.github.io/dev/reference/kfnetlist_schema/">
       
       
-        <link rel="prev" href="../equivalent_ports/">
+        <link rel="prev" href="../extract/">
       
       
-        <link rel="next" href="../faq/">
+        <link rel="next" href="./circuit_pb2/">
       
       
         
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="zensical-0.0.41">
+      <meta name="generator" content="zensical-0.0.52">
     
     
       
-        <title>Instance Flattening - kfnetlist</title>
+        <title>Index - kfnetlist</title>
       
     
     
       
         
       
-      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.fba56155.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.8b3b5a67.min.css">
       
         
           
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#instance-flattening" class="md-skip">
+        <a href="#kfnetlist.kfnetlist_schema" class="md-skip">
           Skip to content
         </a>
       
@@ -104,7 +104,7 @@
     <a href="../.." title="kfnetlist" class="md-header__button md-logo" aria-label="kfnetlist" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
@@ -121,7 +121,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Instance Flattening
+              Index
             
           </span>
         </div>
@@ -177,7 +177,7 @@
         <a href="https://github.com/gdsfactory/kfnetlist" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -279,16 +279,14 @@
   
   
   
-    
-  
   
     
       
     
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../equivalent_ports/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../guides/lvs_verification/" class="md-tabs__link">
           
   
   Guides
@@ -303,15 +301,7 @@
   
   
   
-  
     
-      
-    
-    
-    
-      
-  
-  
   
   
     
@@ -319,8 +309,20 @@
     
     
     
-      <li class="md-tabs__item">
-        <a href="../../reference/" class="md-tabs__link">
+      
+  
+  
+  
+    
+  
+  
+    
+      
+    
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
           
   
   Reference
@@ -365,7 +367,7 @@
     <a href="../.." title="kfnetlist" class="md-nav__button md-logo" aria-label="kfnetlist" data-md-component="logo">
       
   
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
 
     </a>
     kfnetlist
@@ -375,7 +377,7 @@
       <a href="https://github.com/gdsfactory/kfnetlist" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -792,6 +794,60 @@
   
   
     <li class="md-nav__item">
+      <a href="../../extraction/l2n_parsing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  L2N Parsing
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../extraction/short_detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Short Detection
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../extraction/port_checking/" class="md-nav__link">
         
   
@@ -800,6 +856,250 @@
     
   
   Port Checking
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Guides
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  Guides
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/lvs_verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  LVS Verification
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/equivalent_ports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Equivalent Ports
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/hierarchical_flattening/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Hierarchical Flattening
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/instance_removal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Instance Removal
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/placement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Placement
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/open_detection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Open Detection
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FAQ
 
     
   </span>
@@ -842,237 +1142,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Guides
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-  Guides
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../equivalent_ports/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Equivalent Ports
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Instance Flattening
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="././" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  Instance Flattening
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-
-<nav class="md-nav md-nav--secondary" aria-label="On this page">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      On this page
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#example-flattening-a-helper-instance" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Example: flattening a helper instance
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#applying-flatten_instances" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Applying <code>flatten_instances()</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-is-this-used" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        When is this used?
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        See Also
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../faq/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-  FAQ
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
-        
-          
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
             
   
   
@@ -1089,7 +1162,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1103,6 +1176,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1113,11 +1188,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" checked>
         
           
           <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
@@ -1137,7 +1212,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_6_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1154,7 +1229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/" class="md-nav__link">
+      <a href="../" class="md-nav__link">
         
   
   
@@ -1181,7 +1256,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/extract/" class="md-nav__link">
+      <a href="../extract/" class="md-nav__link">
         
   
   
@@ -1205,10 +1280,203 @@
                 
   
   
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6_1_3" id="__nav_6_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  kfnetlist_schema
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_6_1_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+  kfnetlist_schema
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Overview
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#kfnetlist.kfnetlist_schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        kfnetlist_schema
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
   
   
     <li class="md-nav__item">
-      <a href="../../reference/port_check/" class="md-nav__link">
+      <a href="./circuit_pb2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  circuit_pb2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  models
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../port_check/" class="md-nav__link">
         
   
   
@@ -1284,8 +1552,6 @@
                     
                     
                     
-                      
-                    
                     
                       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
                       <div class="md-sidebar-button__wrapper">
@@ -1301,8 +1567,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1311,43 +1575,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#example-flattening-a-helper-instance" class="md-nav__link">
+  <a href="#kfnetlist.kfnetlist_schema" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        Example: flattening a helper instance
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#applying-flatten_instances" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        Applying <code>flatten_instances()</code>
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#when-is-this-used" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        When is this used?
-      </span>
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      <span class="md-typeset">
-        See Also
+        kfnetlist_schema
       </span>
     </span>
   </a>
@@ -1375,100 +1606,47 @@
   
 
 
-<p><a class="md-button" href="../instance_flattening/instance_flattening.ipynb"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z"/></svg></span> Download notebook (.ipynb)</a></p>
-<h1 id="instance-flattening">Instance Flattening</h1>
-<p><code>Netlist.flatten_instances()</code> removes named instances from the netlist and
-merges any nets that were connected through the removed instances' ports.
-This is used during extraction to absorb unnamed or excluded instances into
-the parent cell's netlist.</p>
-<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">kfnetlist</span><span class="w"> </span><span class="kn">import</span> <span class="n">Netlist</span><span class="p">,</span> <span class="n">PortRef</span>
-</code></pre></div>
-<h2 id="example-flattening-a-helper-instance">Example: flattening a helper instance</h2>
-<p>Consider a netlist where <code>helper</code> is an intermediate instance we want to
-flatten away.</p>
-<div class="highlight"><pre><span></span><code><span class="n">nl</span> <span class="o">=</span> <span class="n">Netlist</span><span class="p">()</span>
+  <h1 id="__skip">Index</h1>
 
-<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">&quot;PDK&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="s2">&quot;helper&quot;</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">&quot;PDK&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">&quot;passthrough&quot;</span><span class="p">)</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_inst</span><span class="p">(</span><span class="s2">&quot;sink&quot;</span><span class="p">,</span> <span class="n">kcl</span><span class="o">=</span><span class="s2">&quot;PDK&quot;</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s2">&quot;sink&quot;</span><span class="p">)</span>
+<div class="doc doc-object doc-module">
 
-<span class="c1"># src.out → helper.in</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span>
-    <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;out&quot;</span><span class="p">),</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;helper&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">)</span>
-<span class="p">)</span>
 
-<span class="c1"># helper.out → sink.in</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">create_net</span><span class="p">(</span>
-    <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;helper&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;out&quot;</span><span class="p">),</span> <span class="n">PortRef</span><span class="p">(</span><span class="n">instance</span><span class="o">=</span><span class="s2">&quot;sink&quot;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="s2">&quot;in&quot;</span><span class="p">)</span>
-<span class="p">)</span>
 
-<span class="n">nl</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+<h2 id="kfnetlist.kfnetlist_schema" class="doc doc-heading">
+            <span class="doc doc-object-name doc-module-name">kfnetlist_schema</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Before flattening:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Instances: </span><span class="si">{</span><span class="n">nl</span><span class="o">.</span><span class="n">instance_names</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">net</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nl</span><span class="o">.</span><span class="n">nets</span><span class="p">):</span>
-    <span class="n">members</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">PortRef</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
-        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">net</span>
-    <span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  net[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">&#39; — &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">members</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>Before flattening:
-  Instances: [&#39;helper&#39;, &#39;sink&#39;, &#39;src&#39;]
-  net[0]: helper.in — src.out
-  net[1]: helper.out — sink.in
-</code></pre></div>
-<h2 id="applying-flatten_instances">Applying <code>flatten_instances()</code></h2>
-<p>Pass a list of instance names to flatten. The instances are removed, and any
-nets that shared a port on the flattened instance are merged.</p>
-<div class="highlight"><pre><span></span><code><span class="n">nl</span><span class="o">.</span><span class="n">flatten_instances</span><span class="p">([</span><span class="s2">&quot;helper&quot;</span><span class="p">])</span>
-<span class="n">nl</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">After flattening &#39;helper&#39;:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Instances: </span><span class="si">{</span><span class="n">nl</span><span class="o">.</span><span class="n">instance_names</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">net</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nl</span><span class="o">.</span><span class="n">nets</span><span class="p">):</span>
-    <span class="n">members</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">instance</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">port</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">PortRef</span><span class="p">)</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;&lt;</span><span class="si">{</span><span class="n">m</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
-        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">net</span>
-    <span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  net[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">]: </span><span class="si">{</span><span class="s1">&#39; — &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">members</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>After flattening &#39;helper&#39;:
-  Instances: [&#39;sink&#39;, &#39;src&#39;]
-  net[0]: sink.in — src.out
-</code></pre></div>
-<p>The <code>helper</code> instance is gone, and <code>src.out</code> is now directly connected to
-<code>sink.in</code> in a single merged net.</p>
-<h2 id="when-is-this-used">When is this used?</h2>
-<p>During netlist extraction, <code>flatten_instances()</code> is called to:</p>
-<ul>
-<li><strong>Remove unnamed instances</strong> (<code>ignore_unnamed=True</code>) — instances that were
-  not given explicit names during placement</li>
-<li><strong>Remove excluded instances</strong> (<code>exclude_purposes=["routing"]</code>) — instances
-  whose purpose tag marks them as infrastructure (routing waveguides, etc.)
-  rather than functional components</li>
-</ul>
-<p>After flattening, the netlist reflects only the named, functional instances
-and their direct connectivity.</p>
-<h2 id="see-also">See Also</h2>
-<table>
-<thead>
-<tr>
-<th>Topic</th>
-<th>Where</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Netlist data model</td>
-<td><a href="../../concepts/netlist_model/">Concepts: Netlist Model</a></td>
-</tr>
-<tr>
-<td>Extraction pipeline</td>
-<td><a href="../../extraction/overview/">Extraction: Overview</a></td>
-</tr>
-</tbody>
-</table>
+</h2>
+
+    <div class="doc doc-contents first">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+    </div>
+
+</div>
 
 
 
@@ -1521,10 +1699,10 @@ and their direct connectivity.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.tabs.sticky"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"latest","provider":"mike"}}</script>
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.tabs","navigation.tabs.sticky"],"search":"../../assets/javascripts/workers/search.7d14d953.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":{"default":"latest","provider":"mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.dbc0afdc.min.js"></script>
+      <script src="../../assets/javascripts/bundle.ed145cee.min.js"></script>
       
     
   </body>
