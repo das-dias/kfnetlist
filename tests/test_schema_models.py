@@ -8,6 +8,7 @@ Tests for kfnetlist.kfnetlist_schema:
   - Full structural round-trip
   - Type alias identity
   - Proto round-trip (ProtoCircuit ↔ circuit_pb2.Circuit)
+  - Protobuf byte round-trips through Rust-backed types
 """
 
 from __future__ import annotations
@@ -28,6 +29,8 @@ from kfnetlist.kfnetlist_schema import (
     NetlistPort,
     PortRef,
     ProtoCircuit,
+    ProtoModule,
+    Terminal,
     TopLevelModule,
     InstanceRef,
     load_pic_yaml,
@@ -132,8 +135,7 @@ class TestJsonRoundTrip:
 
 class TestYamlRoundTrip:
     def _yaml_rt(self, doc: TopLevelModule) -> TopLevelModule:
-        raw = yaml.dump(json.loads(doc.model_dump_json()), allow_unicode=True)
-        return TopLevelModule.model_validate(yaml.safe_load(raw))
+        return TopLevelModule.from_yaml(doc.to_yaml())
 
     def test_simple(self):
         doc = _simple_doc()
@@ -383,28 +385,17 @@ class TestTypeAliases:
 
 
 class TestProtoRoundTrip:
-    def _make_circuit_proto(self) -> circuit_pb2.Circuit:
-        c = circuit_pb2.Circuit()
-        c.name = "test_circuit"
-        c.top_module = "mod_a"
-        m = c.modules.add()
-        m.name = "mod_a"
-        m.uid = 1
-        t = m.terminal.add()
-        t.name = "o1"
-        t.uid = 0
-        return c
-
     def test_proto_circuit_model_round_trip(self):
-        proto = self._make_circuit_proto()
-        model = ProtoCircuit.from_proto(proto)
-        assert model.name == "test_circuit"
-        assert model.top_module == "mod_a"
-        assert len(model.modules) == 1
-        assert model.modules[0].name == "mod_a"
-        back = model.to_proto()
-        assert back.name == proto.name
-        assert back.top_module == proto.top_module
+        model = ProtoCircuit(
+            name="test_circuit",
+            top_module="mod_a",
+            modules=[ProtoModule(name="mod_a", uid=1, terminal=[Terminal(name="o1")])],
+        )
+        wire = model.to_proto()
+        assert isinstance(wire, bytes)
+        back = ProtoCircuit.from_proto(wire)
+        assert back == model
+        assert back.modules[0].terminal[0].name == "o1"
 
     def test_top_level_module_to_proto_circuit(self):
         doc = _simple_doc()
@@ -500,3 +491,130 @@ class TestBareModuleBackwardCompat:
         doc = TopLevelModule.model_validate(raw)
         assert "__root__" not in doc.modules
         assert "m" in doc.modules
+
+
+def test_schema_runs_without_python_model_or_codec_packages():
+    """A fresh interpreter blocks optional Python model and codec imports."""
+    import subprocess
+    import sys
+
+    subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            """
+import sys
+class BlockPythonCodecs:
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname.split(".")[0] in {"google", "pydantic", "pydantic_yaml", "yaml"}:
+            raise AssertionError(f"Schema tried to import {fullname}")
+sys.meta_path.insert(0, BlockPythonCodecs())
+from kfnetlist.kfnetlist_schema import TopLevelModule, ProtoCircuit
+from kfnetlist import _native
+assert TopLevelModule is _native.TopLevelModule
+doc = TopLevelModule.from_yaml("instances: {a: {component: coupler}}")
+wire = doc.to_proto()
+assert isinstance(wire, bytes)
+assert TopLevelModule.from_proto(wire) == doc
+assert ProtoCircuit.from_proto(wire).top_module == "__root__"
+assert doc.to_netlists()["__root__"].has_instance("a")
+""",
+        ],
+        check=True,
+    )
+
+
+def test_nested_proto_values_and_terminal_alias():
+    from kfnetlist.kfnetlist_schema import (
+        Connection,
+        ModelReference,
+        ParameterValue,
+        PrefixedValue,
+        SIPrefix,
+        TerminalReference,
+    )
+
+    parameter = ParameterValue(
+        model_ref=ModelReference(
+            model_interface_name="model",
+            arguments={
+                "width": ParameterValue(
+                    prefixed_value=PrefixedValue(
+                        double_value=0.5, prefix=SIPrefix.MICRO
+                    )
+                )
+            },
+        )
+    )
+    back = ParameterValue.from_proto(parameter.to_proto())
+    assert back.model_ref is not None
+    width = back.model_ref.arguments["width"].prefixed_value
+    assert width is not None
+    assert width.double_value == 0.5
+    assert width.prefix == SIPrefix.MICRO
+    assert ParameterValue.from_dict(parameter.to_dict()) == parameter
+    with pytest.raises(ValueError, match="only one value"):
+        ParameterValue.from_dict({"prefixed_value": {}, "model_ref": {}})
+    # The same validation applies to raw nested dictionaries.
+    with pytest.raises(ValueError, match="only one value"):
+        ModelReference.from_dict(
+            {"arguments": {"x": {"prefixed_value": {}, "model_ref": {}}}}
+        )
+    pin = TerminalReference.from_dict({"instance_name": "a", "Terminal_name": "in"})
+    connection = Connection(source=pin, target=TerminalReference(terminal_name="out"))
+    recovered = Connection.from_proto(connection.to_proto())
+    assert recovered.source is not None
+    assert recovered.source.terminal_name == "in"
+    assert recovered == connection
+
+
+def test_proto_bytes_keep_exact_settings_and_metadata():
+    original = Module(
+        name="display name",
+        instances={
+            "a": Instance(
+                component="x",
+                settings={
+                    "large": 2**53 + 1,
+                    "enabled": True,
+                    "null": None,
+                    "nested": [1, "two"],
+                },
+                info={"source": "layout"},
+            )
+        },
+        nets=[[], ["a,p"]],
+        info={"owner": "test"},
+        placements={"a": {"x": 10}},
+        routes={"optical": {"radius": 5}},
+    )
+    doc = TopLevelModule(modules={"m": original}, toplevel="m")
+    assert TopLevelModule.from_proto(doc.to_proto()) == doc
+    inst = doc.to_netlists()["m"].instances["a"]
+    assert inst.info == {"source": "layout"}
+    assert type(inst.settings["enabled"]) is bool
+    assert inst.settings["large"] == 2**53 + 1
+
+
+def test_native_fields_return_owned_snapshots():
+    doc = _simple_doc()
+    modules = doc.modules
+    modules.clear()
+    assert "buf" in doc.modules
+    with pytest.raises(AttributeError):
+        doc.toplevel = "other"  # ty: ignore[invalid-assignment]
+
+
+def test_invalid_wire_and_yaml_raise_value_error():
+    with pytest.raises(ValueError):
+        ProtoCircuit.from_proto(b"\xff")
+    with pytest.raises(ValueError):
+        TopLevelModule.from_yaml("modules: [")
+
+
+def test_optional_pydantic_adapter_delegates_to_native_model():
+    pydantic = pytest.importorskip("pydantic")
+    adapter = pydantic.TypeAdapter(TopLevelModule)
+    doc = _simple_doc()
+    assert adapter.validate_python(doc.to_dict()) == doc
+    assert adapter.validate_json(adapter.dump_json(doc)) == doc

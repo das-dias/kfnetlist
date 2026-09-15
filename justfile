@@ -21,7 +21,10 @@ compile-schema-py:
 #    maturin build
 
 # Compile .proto files to both Python and Rust
-compile-schema: compile-schema-py
+# Protobuf Rust structs are generated automatically by the core build script.
+compile-schema:
+    compule-schema-py
+    cargo build -p kfnetlist-core
 
 # Development setup
 dev:

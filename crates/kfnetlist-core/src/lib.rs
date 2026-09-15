@@ -8,6 +8,7 @@ pub mod net;
 pub mod netlist;
 pub mod placement;
 pub mod port;
+pub mod schema;
 pub use error::{ArrayDirection, Error, Result};
 pub use flatten::{compose_placement, flatten_netlist, FlattenOptions, FlattenOutput, NetlistData};
 pub use instance::{NetlistArray, NetlistInstance};
