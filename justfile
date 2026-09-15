@@ -1,27 +1,6 @@
-# Schema source directory
-SCHEMA_DIR := "kfnetlist-schema"
-
-# Output directory for generated Python protobuf code
-PROTO_OUT := "src/kfnetlist/kfnetlist_schema"
-PROTO_OUT_RS := "src/kfnetlist_schema"
-
-# Compile .proto files to Python (protoc)
-compile-schema-py:
-    mkdir -p {{PROTO_OUT}}
-    protoc \
-        --proto_path={{SCHEMA_DIR}} \
-        --python_out={{PROTO_OUT}} \
-        --pyi_out={{PROTO_OUT}} \
-        {{SCHEMA_DIR}}/*.proto
-    touch {{PROTO_OUT}}/__init__.py
-
-# Compile .proto files to Rust via prost-build (invoked through maturin's build.rs)
-compile-schema-rs:
-    mkdir -p {{PROTO_OUT_RS}}
-    maturin build
-
-# Compile .proto files to both Python and Rust
-compile-schema: compile-schema-py compile-schema-rs
+# Protobuf Rust structs are generated automatically by the core build script.
+compile-schema:
+    cargo build -p kfnetlist-core
 
 # Development setup
 dev:
@@ -31,7 +10,11 @@ dev:
 
 # Run tests
 test python_version="3.14":
-    uv run -p {{python_version}} --with . --extra dev --isolated pytest -s
+    uv run -p {{python_version}} --with . --with pydantic --extra dev --isolated pytest -s
+
+# Test the standalone Rust core (no Python installation required)
+test-rust:
+    cargo test -p kfnetlist-core
 
 # Run linting
 lint:

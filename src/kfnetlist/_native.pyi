@@ -1,7 +1,8 @@
 """Type stubs for the Rust-backed ``kfnetlist._native`` module."""
 
-from collections.abc import Callable, Mapping
-from typing import Any, Self
+from collections.abc import Callable, Mapping, Sequence
+from typing import Any, ClassVar, Self
+from os import PathLike
 
 class NetlistPort:
     name: str
@@ -71,6 +72,7 @@ class NetlistArray:
     def from_dict(cls, obj: dict[str, Any]) -> Self: ...
 
 class NetlistInstance:
+    info: dict[str, Any]
     kcl: str
     component: str
     settings: dict[str, Any]
@@ -84,8 +86,55 @@ class NetlistInstance:
         settings: dict[str, Any] | None = ...,
         array: NetlistArray | None = ...,
         name: str = ...,
+        *,
+        info: dict[str, Any] | None = ...,
     ) -> None: ...
     def normalize(self) -> None: ...
+    def to_json(self) -> str: ...
+    @classmethod
+    def from_json(cls, data: str, name: str = ...) -> Self: ...
+    def to_dict(self) -> dict[str, Any]: ...
+    @classmethod
+    def from_dict(cls, obj: dict[str, Any], name: str = ...) -> Self: ...
+
+class Placement:
+    x: float
+    y: float
+    orientation: float
+    mirror: bool
+    bbox: dict[str, float]
+
+    def __init__(
+        self,
+        x: float,
+        y: float,
+        orientation: float,
+        mirror: bool,
+        bbox: dict[str, float],
+    ) -> None: ...
+    def to_json(self) -> str: ...
+    @classmethod
+    def from_json(cls, data: str) -> Self: ...
+    def to_dict(self) -> dict[str, Any]: ...
+    @classmethod
+    def from_dict(cls, obj: dict[str, Any]) -> Self: ...
+
+class PlacedInstance(NetlistInstance):
+    cell: str
+    placement: Placement
+
+    def __init__(
+        self,
+        kcl: str,
+        component: str,
+        settings: dict[str, Any] | None = ...,
+        array: NetlistArray | None = ...,
+        name: str = ...,
+        cell: str = ...,
+        placement: Placement | None = ...,
+        *,
+        info: dict[str, Any] | None = ...,
+    ) -> None: ...
     def to_json(self) -> str: ...
     @classmethod
     def from_json(cls, data: str, name: str = ...) -> Self: ...
@@ -137,12 +186,29 @@ class Netlist:
         settings: dict[str, Any] | None = ...,
         na: int = ...,
         nb: int = ...,
+        *,
+        info: dict[str, Any] | None = ...,
     ) -> NetlistInstance: ...
     def create_net(self, *ports: NetMember) -> None: ...
     def add_net(self, net: Net) -> None: ...
     def detect_opens(self) -> dict[str, Any]: ...
     def find_net_difference(self, reference: Netlist) -> dict[str, list[Net]]: ...
-    def flatten_instances(self, names: list[str]) -> None: ...
+    def remove_instances(self, names: list[str]) -> None: ...
+    def flatten_instances(self, names: list[str]) -> None:
+        """Deprecated alias for ``remove_instances``."""
+    def flatten(
+        self,
+        netlists: Mapping[str, Netlist],
+        cells: Sequence[str] | None = ...,
+        *,
+        exclude: Sequence[str] | None = ...,
+        instance_cell_map: Mapping[str, str] | None = ...,
+        sub_instance_cell_maps: Mapping[str, Mapping[str, str]] | None = ...,
+        recursive: bool = ...,
+        allow_unconnected_ports: bool = ...,
+        warn_skipped: bool = ...,
+        separator: str = ...,
+    ) -> Netlist: ...
     def normalize(
         self,
         cell_name: str | None = ...,
@@ -157,6 +223,457 @@ class Netlist:
     @classmethod
     def from_dict(cls, obj: dict[str, Any]) -> Self: ...
 
+class PlacedNetlist(Netlist):
+    @property
+    def instances(self) -> dict[str, PlacedInstance]: ...  # type: ignore[override]
+    @property
+    def placements(self) -> dict[str, Placement]: ...
+    def __init__(self) -> None: ...
+    @classmethod
+    def from_netlist(
+        cls,
+        netlist: Netlist,
+        placements: Mapping[str, Placement] | None = ...,
+        cells: Mapping[str, str] | None = ...,
+    ) -> Self: ...
+    def create_inst(  # type: ignore[override]
+        self,
+        name: str,
+        kcl: str,
+        component: str,
+        settings: dict[str, Any] | None = ...,
+        na: int = ...,
+        nb: int = ...,
+        cell: str = ...,
+        placement: Placement | None = ...,
+        *,
+        info: dict[str, Any] | None = ...,
+    ) -> PlacedInstance: ...
+    # Same parameters as the base, narrower (covariant) return type.
+    def flatten(
+        self,
+        netlists: Mapping[str, Netlist],
+        cells: Sequence[str] | None = ...,
+        *,
+        exclude: Sequence[str] | None = ...,
+        instance_cell_map: Mapping[str, str] | None = ...,
+        sub_instance_cell_maps: Mapping[str, Mapping[str, str]] | None = ...,
+        recursive: bool = ...,
+        allow_unconnected_ports: bool = ...,
+        warn_skipped: bool = ...,
+        separator: str = ...,
+    ) -> PlacedNetlist: ...
+    def to_dict(self) -> dict[str, Any]: ...
+    @classmethod
+    def from_dict(cls, obj: dict[str, Any]) -> Self: ...
+
 def include_from_rdb(xml: str, paths: list[str]) -> str: ...
 def exclude_from_rdb(xml: str, paths: list[str]) -> str: ...
 def filter_rdb(xml: str, predicate: Callable[[str], bool]) -> str: ...
+
+class _SchemaModel:
+    def to_dict(self) -> dict[str, Any]: ...
+    def to_json(self) -> str: ...
+    def model_dump(self, *, mode: str = ...) -> dict[str, Any]: ...
+    def model_dump_json(self) -> str: ...
+    @classmethod
+    def from_dict(cls, obj: dict[str, Any]) -> Self: ...
+    @classmethod
+    def from_json(cls, data: str) -> Self: ...
+    @classmethod
+    def model_validate(cls, obj: Any) -> Self: ...
+    @classmethod
+    def model_validate_json(cls, data: str) -> Self: ...
+
+class _ProtoModel(_SchemaModel):
+    def to_proto(self) -> bytes: ...
+    @classmethod
+    def from_proto(cls, data: bytes) -> Self: ...
+
+class TerminalDirection:
+    INOUT: ClassVar[TerminalDirection]
+    INPUT: ClassVar[TerminalDirection]
+    OUTPUT: ClassVar[TerminalDirection]
+    def __int__(self) -> int: ...
+
+class SignalDomain:
+    UNSPECIFIED: ClassVar[SignalDomain]
+    ELECTRICAL: ClassVar[SignalDomain]
+    WAVEGUIDE: ClassVar[SignalDomain]
+    def __int__(self) -> int: ...
+
+class SIPrefix:
+    UNSPECIFIED: ClassVar[SIPrefix]
+    QUECTO: ClassVar[SIPrefix]
+    RONTO: ClassVar[SIPrefix]
+    YOCTO: ClassVar[SIPrefix]
+    ZEPTO: ClassVar[SIPrefix]
+    ATTO: ClassVar[SIPrefix]
+    FEMTO: ClassVar[SIPrefix]
+    PICO: ClassVar[SIPrefix]
+    NANO: ClassVar[SIPrefix]
+    MICRO: ClassVar[SIPrefix]
+    MILLI: ClassVar[SIPrefix]
+    CENTI: ClassVar[SIPrefix]
+    DECI: ClassVar[SIPrefix]
+    DECA: ClassVar[SIPrefix]
+    HECTO: ClassVar[SIPrefix]
+    KILO: ClassVar[SIPrefix]
+    MEGA: ClassVar[SIPrefix]
+    GIGA: ClassVar[SIPrefix]
+    TERA: ClassVar[SIPrefix]
+    PETA: ClassVar[SIPrefix]
+    EXA: ClassVar[SIPrefix]
+    ZETTA: ClassVar[SIPrefix]
+    YOTTA: ClassVar[SIPrefix]
+    RONNA: ClassVar[SIPrefix]
+    QUETTA: ClassVar[SIPrefix]
+    def __int__(self) -> int: ...
+
+class PrefixedValue(_ProtoModel):
+    @property
+    def double_value(self) -> float: ...
+    @property
+    def prefix(self) -> SIPrefix: ...
+    def __init__(
+        self, *, double_value: float = ..., prefix: SIPrefix = ...
+    ) -> None: ...
+
+class ParameterValue(_ProtoModel):
+    @property
+    def prefixed_value(self) -> PrefixedValue | None: ...
+    @property
+    def model_ref(self) -> ModelReference | None: ...
+    def __init__(
+        self,
+        *,
+        prefixed_value: PrefixedValue | None = ...,
+        model_ref: ModelReference | None = ...,
+    ) -> None: ...
+
+class Parameter(_ProtoModel):
+    @property
+    def uid(self) -> int: ...
+    @property
+    def name(self) -> str: ...
+    @property
+    def default_value(self) -> ParameterValue | None: ...
+    @property
+    def description(self) -> str: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        uid: int = ...,
+        name: str = ...,
+        default_value: ParameterValue | None = ...,
+        description: str = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class ModelInterface(_ProtoModel):
+    @property
+    def name(self) -> str: ...
+    @property
+    def function_name(self) -> str: ...
+    @property
+    def parameters(self) -> list[Parameter]: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        name: str = ...,
+        function_name: str = ...,
+        parameters: list[Parameter] = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class ModelReference(_ProtoModel):
+    @property
+    def model_interface_name(self) -> str: ...
+    @property
+    def arguments(self) -> dict[str, ParameterValue]: ...
+    def __init__(
+        self,
+        *,
+        model_interface_name: str = ...,
+        arguments: dict[str, ParameterValue] = ...,
+    ) -> None: ...
+
+class Terminal(_ProtoModel):
+    @property
+    def uid(self) -> int: ...
+    @property
+    def name(self) -> str: ...
+    @property
+    def direction(self) -> TerminalDirection: ...
+    @property
+    def domain(self) -> SignalDomain: ...
+    @property
+    def width(self) -> int: ...
+    @property
+    def cross_section(self) -> str: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        uid: int = ...,
+        name: str = ...,
+        direction: TerminalDirection = ...,
+        domain: SignalDomain = ...,
+        width: int = ...,
+        cross_section: str = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class TerminalReference(_ProtoModel):
+    @property
+    def instance_name(self) -> str: ...
+    @property
+    def terminal_name(self) -> str: ...
+    def __init__(
+        self, *, instance_name: str = ..., terminal_name: str = ...
+    ) -> None: ...
+
+class Connection(_ProtoModel):
+    @property
+    def name(self) -> str: ...
+    @property
+    def source(self) -> TerminalReference | None: ...
+    @property
+    def target(self) -> TerminalReference | None: ...
+    @property
+    def domain(self) -> SignalDomain: ...
+    @property
+    def weight(self) -> int: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        name: str = ...,
+        source: TerminalReference | None = ...,
+        target: TerminalReference | None = ...,
+        domain: SignalDomain = ...,
+        weight: int = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class Bus(_ProtoModel):
+    @property
+    def name(self) -> str: ...
+    @property
+    def width(self) -> int: ...
+    @property
+    def domain(self) -> SignalDomain: ...
+    @property
+    def connections(self) -> list[Connection]: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        name: str = ...,
+        width: int = ...,
+        domain: SignalDomain = ...,
+        connections: list[Connection] = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class ExternalModule(_ProtoModel):
+    @property
+    def name(self) -> str: ...
+    @property
+    def domain(self) -> str: ...
+    @property
+    def terminals(self) -> list[Terminal]: ...
+    @property
+    def parameters(self) -> list[Parameter]: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        name: str = ...,
+        domain: str = ...,
+        terminals: list[Terminal] = ...,
+        parameters: list[Parameter] = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class ProtoModuleReference(_ProtoModel):
+    @property
+    def name(self) -> str: ...
+    @property
+    def module_name(self) -> str: ...
+    @property
+    def class_name(self) -> str: ...
+    @property
+    def parameter_values(self) -> list[ParameterValue]: ...
+    @property
+    def parameter_overrides(self) -> dict[str, ParameterValue]: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        name: str = ...,
+        module_name: str = ...,
+        class_name: str = ...,
+        parameter_values: list[ParameterValue] = ...,
+        parameter_overrides: dict[str, ParameterValue] = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class ProtoModule(_ProtoModel):
+    @property
+    def uid(self) -> int: ...
+    @property
+    def name(self) -> str: ...
+    @property
+    def class_name(self) -> str: ...
+    @property
+    def terminal(self) -> list[Terminal]: ...
+    @property
+    def parameters(self) -> list[Parameter]: ...
+    @property
+    def model_interfaces(self) -> list[ModelInterface]: ...
+    @property
+    def module_references(self) -> list[ProtoModuleReference]: ...
+    @property
+    def connections(self) -> list[Connection]: ...
+    @property
+    def buses(self) -> list[Bus]: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        uid: int = ...,
+        name: str = ...,
+        class_name: str = ...,
+        terminal: list[Terminal] = ...,
+        parameters: list[Parameter] = ...,
+        model_interfaces: list[ModelInterface] = ...,
+        module_references: list[ProtoModuleReference] = ...,
+        connections: list[Connection] = ...,
+        buses: list[Bus] = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class ProtoCircuit(_ProtoModel):
+    @property
+    def name(self) -> str: ...
+    @property
+    def domain(self) -> str: ...
+    @property
+    def top_module(self) -> str: ...
+    @property
+    def modules(self) -> list[ProtoModule]: ...
+    @property
+    def ext_modules(self) -> list[ExternalModule]: ...
+    @property
+    def properties(self) -> dict[str, str]: ...
+    def __init__(
+        self,
+        *,
+        name: str = ...,
+        domain: str = ...,
+        top_module: str = ...,
+        modules: list[ProtoModule] = ...,
+        ext_modules: list[ExternalModule] = ...,
+        properties: dict[str, str] = ...,
+    ) -> None: ...
+
+class ArraySpec(_SchemaModel):
+    @property
+    def na(self) -> int: ...
+    @property
+    def nb(self) -> int: ...
+    def __init__(self, *, na: int = ..., nb: int = ...) -> None: ...
+
+class Instance(_SchemaModel):
+    @property
+    def component(self) -> str: ...
+    @property
+    def settings(self) -> dict[str, Any]: ...
+    @property
+    def array(self) -> ArraySpec | None: ...
+    @property
+    def info(self) -> dict[str, Any]: ...
+    def __init__(
+        self,
+        *,
+        component: str,
+        settings: dict[str, Any] = ...,
+        array: ArraySpec | None = ...,
+        info: dict[str, Any] = ...,
+    ) -> None: ...
+
+class Module(_SchemaModel):
+    @property
+    def name(self) -> str | None: ...
+    @property
+    def settings(self) -> dict[str, Any]: ...
+    @property
+    def info(self) -> dict[str, Any]: ...
+    @property
+    def instances(self) -> dict[str, Instance]: ...
+    @property
+    def placements(self) -> dict[str, Any]: ...
+    @property
+    def ports(self) -> dict[str, str]: ...
+    @property
+    def connections(self) -> dict[str, str]: ...
+    @property
+    def nets(self) -> list[list[str]]: ...
+    @property
+    def routes(self) -> dict[str, Any]: ...
+    def __init__(
+        self,
+        *,
+        name: str | None = ...,
+        settings: dict[str, Any] = ...,
+        info: dict[str, Any] = ...,
+        instances: dict[str, Instance] = ...,
+        placements: dict[str, Any] = ...,
+        ports: dict[str, str] = ...,
+        connections: dict[str, str] = ...,
+        nets: list[list[str]] = ...,
+        routes: dict[str, Any] = ...,
+    ) -> None: ...
+    def to_netlist(self) -> Netlist: ...
+    @classmethod
+    def from_netlist(cls, name: str, nl: Netlist) -> Self: ...
+
+class TopLevelModule(_SchemaModel):
+    @property
+    def modules(self) -> dict[str, Module]: ...
+    @property
+    def toplevel(self) -> str | None: ...
+    def __init__(
+        self,
+        *,
+        modules: dict[str, Module] = ...,
+        toplevel: str | None = ...,
+        **bare_module: Any,
+    ) -> None: ...
+    def to_proto_circuit(self) -> ProtoCircuit: ...
+    @classmethod
+    def from_proto_circuit(cls, circuit: ProtoCircuit) -> Self: ...
+    def to_proto(self) -> bytes: ...
+    @classmethod
+    def from_proto(cls, data: bytes) -> Self: ...
+    def to_yaml(self) -> str: ...
+    @classmethod
+    def from_yaml(cls, text: str) -> Self: ...
+    def to_netlists(self) -> dict[str, Netlist]: ...
+    @classmethod
+    def from_netlists(
+        cls, netlists: dict[str, Netlist], toplevel: str | None = ...
+    ) -> Self: ...
+
+def load_pic_yaml(path: str | PathLike[str]) -> TopLevelModule: ...

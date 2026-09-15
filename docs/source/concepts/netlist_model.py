@@ -166,6 +166,37 @@ assert instances_a is not instances_b
 print("Properties return fresh snapshots ✓")
 
 # %% [markdown]
+# ## Instance metadata
+#
+# Each instance has an `info` dictionary for JSON-compatible metadata. The same
+# API is available on `PlacedInstance` and `PlacedNetlist`.
+
+# %%
+metadata_netlist = Netlist()
+metadata_netlist.create_inst(
+    "detector", "pdk", "photodiode", info={"measure": "power", "channels": [1, 2]}
+)
+assert metadata_netlist.instances["detector"].info["measure"] == "power"
+assert Netlist.from_json(metadata_netlist.to_json()) == metadata_netlist
+
+# %% [markdown]
+# Extraction copies `info` from named kfactory instances. Unnamed instances and
+# older adapters without `info` produce an empty dictionary. Empty metadata is
+# omitted from serialized output; old payloads without `info` load as `{}`.
+# Readers predating this feature reject populated `info` as an unknown field.
+#
+# Like `settings`, `info` returns a fresh dictionary. Assigning `instance.info`
+# replaces metadata on that instance object; instances returned by a netlist are
+# also snapshots. Supply `info=` to `create_inst()` to store it in a netlist.
+# For editing a complete netlist, update its `to_dict()` representation and
+# reconstruct it with `from_dict()`.
+#
+# Normalization preserves metadata values, including integer-valued floats.
+# Full instance and netlist equality includes metadata; `find_net_difference()`
+# compares connectivity only. Flattening keeps the metadata of surviving and
+# promoted child instances. An eliminated parent's metadata is discarded, and
+# is not merged into its children.
+#
 # ## Summary
 #
 # | Operation | API |
