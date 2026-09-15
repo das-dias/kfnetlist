@@ -98,7 +98,9 @@ src = "src/kfnetlist/__init__.py"
 
 [dependency-groups]
 dev = [
+    "klayout>=0.30.12",
     "pre-commit>=4.6.0",
     "pylint>=4.0.8",
+    "pytest>=9.1.1",
     "ruff>=0.15.16",
 ]
