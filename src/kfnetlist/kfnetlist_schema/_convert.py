@@ -247,7 +247,7 @@ def _parameters_to_settings(params: list[Parameter]) -> dict[str, Any]:
 def _instance_to_proto_ref(inst_name: str, inst: Instance) -> ProtoModuleReference:
     props: dict[str, str] = {}
     if inst.array:
-        props[_PROP_ARRAY] = inst.array.model_dump_json()
+        props[_PROP_ARRAY] = inst.array.to_json()
     if inst.info:
         props[_PROP_INFO] = json.dumps(inst.info)
     # settings → parameter_overrides (encode each value as a ParameterValue)
@@ -272,7 +272,7 @@ def _proto_ref_to_instance(ref: ProtoModuleReference) -> tuple[str, Instance]:
     props = ref.properties
     array: ArraySpec | None = None
     if _PROP_ARRAY in props:
-        array = ArraySpec.model_validate_json(props[_PROP_ARRAY])
+        array = ArraySpec.from_json(props[_PROP_ARRAY])
     info: dict[str, Any] = json.loads(props[_PROP_INFO]) if _PROP_INFO in props else {}
     # Recover settings
     settings: dict[str, Any] = {}
@@ -488,33 +488,3 @@ def load_pic_yaml(path: str | Path) -> TopLevelModule:
     text = _BARE_ELLIPSIS_RE.sub("", text)
     raw = yaml.safe_load(text)
     return TopLevelModule.model_validate(raw)
-"""Compatibility functions delegating schema operations to the Rust core."""
-
-from kfnetlist._native import load_pic_yaml as load_pic_yaml
-from .models import Module, Netlist, ProtoCircuit, TopLevelModule
-
-
-def top_level_module_to_netlists(doc: TopLevelModule) -> dict[str, Netlist]:
-    return doc.to_netlists()
-
-
-def module_to_netlist(mod: Module) -> Netlist:
-    return mod.to_netlist()
-
-
-def netlists_to_top_level_module(
-    netlists: dict[str, Netlist], toplevel: str | None = None
-) -> TopLevelModule:
-    return TopLevelModule.from_netlists(netlists, toplevel=toplevel)
-
-
-def netlist_to_module(name: str, nl: Netlist) -> Module:
-    return Module.from_netlist(name, nl)
-
-
-def top_level_module_to_proto_circuit(doc: TopLevelModule) -> ProtoCircuit:
-    return doc.to_proto_circuit()
-
-
-def proto_circuit_to_top_level_module(circuit: ProtoCircuit) -> TopLevelModule:
-    return TopLevelModule.from_proto_circuit(circuit)
